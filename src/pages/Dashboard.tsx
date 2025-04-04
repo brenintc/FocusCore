@@ -4,7 +4,7 @@ import { useUser } from '@/components/UserProvider';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, Calendar, BarChart2, Settings } from 'lucide-react';
+import { CheckCircle, Calendar, BarChart2, Settings, Wallet } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const { userName } = useUser();
@@ -73,6 +73,24 @@ const Dashboard: React.FC = () => {
                 className="w-full bg-focusblue"
               >
                 Acessar Rotinas
+              </Button>
+            </CardContent>
+          </Card>
+          
+          <Card className="hover:shadow-md transition-all duration-200 hover:-translate-y-1">
+            <CardHeader className="pb-2">
+              <CardTitle className="flex items-center text-xl">
+                <Wallet className="mr-2 h-5 w-5 text-focusblue" />
+                Minhas Finanças
+              </CardTitle>
+              <CardDescription>Controle seus gastos e investimentos</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button 
+                onClick={() => navigate('/financial')} 
+                className="w-full bg-focusblue"
+              >
+                Acessar Finanças
               </Button>
             </CardContent>
           </Card>

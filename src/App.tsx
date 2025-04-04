@@ -11,6 +11,7 @@ import Tasks from "./pages/Tasks";
 import Habits from "./pages/Habits";
 import Routines from "./pages/Routines";
 import Settings from "./pages/Settings";
+import Financial from "./pages/Financial";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -37,6 +38,7 @@ const AppContent = () => {
               <Route path="/tasks" element={<Tasks />} />
               <Route path="/habits" element={<Habits />} />
               <Route path="/routines" element={<Routines />} />
+              <Route path="/financial" element={<Financial />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
