@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Menu, X, Sun, Moon } from "lucide-react";
+import { Menu, X, Sun, Moon, Calendar, Wallet } from "lucide-react";
 
 interface NavbarProps {
   isDarkMode: boolean;
@@ -41,6 +41,14 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               </Link>
               <Link to="/routines" className="text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium">
                 Rotinas
+              </Link>
+              <Link to="/financial" className="text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center">
+                <Wallet className="mr-1 h-4 w-4" />
+                Finanças
+              </Link>
+              <Link to="/calendar" className="text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center">
+                <Calendar className="mr-1 h-4 w-4" />
+                Calendário
               </Link>
               <Button 
                 variant="ghost" 
@@ -103,6 +111,22 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={() => setIsMenuOpen(false)}
             >
               Rotinas
+            </Link>
+            <Link 
+              to="/financial" 
+              className="text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Wallet className="mr-2 h-5 w-5" />
+              Finanças
+            </Link>
+            <Link 
+              to="/calendar" 
+              className="text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Calendar className="mr-2 h-5 w-5" />
+              Calendário
             </Link>
             <Button 
               variant="default" 
