@@ -16,7 +16,8 @@ import {
   MoreVertical, 
   Coffee,
   Sun,
-  Moon
+  Moon,
+  Check
 } from 'lucide-react';
 
 interface RoutineTask {
