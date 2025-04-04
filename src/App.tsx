@@ -13,6 +13,7 @@ import Routines from "./pages/Routines";
 import Settings from "./pages/Settings";
 import Financial from "./pages/Financial";
 import Calendar from "./pages/Calendar";
+import Notes from "./pages/Notes";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -41,6 +42,7 @@ const AppContent = () => {
               <Route path="/routines" element={<Routines />} />
               <Route path="/financial" element={<Financial />} />
               <Route path="/calendar" element={<Calendar />} />
+              <Route path="/notes" element={<Notes />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
