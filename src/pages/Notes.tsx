@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@/components/UserProvider';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
@@ -8,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
 import { format } from 'date-fns';
-import { AlertCircle, Save, Trash2, Plus, FileText, Bold, Italic, Underline, List, ListOrdered, Heading1, Heading2, Heading3 } from 'lucide-react';
+import { AlertCircle, Save, Trash2, Plus, FileText, Search } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { NoteEditor } from '@/components/NoteEditor';
 
@@ -131,11 +130,12 @@ const Notes: React.FC = () => {
                 </CardDescription>
                 
                 <div className="relative mt-2">
+                  <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
                   <Input
                     placeholder="Buscar notas..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full"
+                    className="pl-8"
                   />
                 </div>
               </CardHeader>
