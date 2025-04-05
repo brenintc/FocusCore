@@ -161,15 +161,15 @@
   }
 
   .rdp-day {
-    @apply text-foreground;
+    @apply text-foreground font-medium;
   }
 
   .rdp-day_selected {
-    @apply bg-primary text-primary-foreground;
+    @apply bg-primary text-primary-foreground font-bold;
   }
 
   .rdp-day_today {
-    @apply bg-accent text-accent-foreground;
+    @apply bg-accent text-accent-foreground font-bold;
   }
 
   .rdp-day_outside {
@@ -186,6 +186,35 @@
 
   .rdp-button[aria-selected="true"] {
     @apply bg-primary text-primary-foreground;
+  }
+
+  /* Fix for calendar day numbers */
+  .rdp-button {
+    @apply text-foreground;
+  }
+
+  .rdp-button[aria-selected="true"] {
+    @apply text-primary-foreground;
+  }
+
+  .rdp-button[aria-disabled="true"] {
+    @apply text-muted-foreground opacity-50;
+  }
+
+  .rdp-day_selected .rdp-button {
+    @apply text-primary-foreground;
+  }
+
+  .rdp-day_today .rdp-button {
+    @apply text-accent-foreground;
+  }
+
+  .rdp-day_outside .rdp-button {
+    @apply text-muted-foreground opacity-50;
+  }
+
+  .rdp-day_disabled .rdp-button {
+    @apply text-muted-foreground opacity-50;
   }
 
   /* Note editor styles */
