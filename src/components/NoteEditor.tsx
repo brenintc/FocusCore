@@ -16,7 +16,8 @@ import {
   Edit,
   Trash,
   Copy,
-  MoreHorizontal
+  MoreHorizontal,
+  ArrowLeft
 } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useRouter } from 'next/navigation';
 
 interface NoteEditorProps {
   initialContent: string;
@@ -54,6 +56,7 @@ interface NoteEditorProps {
   onTitleChange?: (title: string) => void;
   onDelete?: () => void;
   onDuplicate?: () => void;
+  onBack?: () => void;
 }
 
 export const NoteEditor: React.FC<NoteEditorProps> = ({ 
@@ -62,8 +65,10 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
   onChange, 
   onTitleChange,
   onDelete,
-  onDuplicate
+  onDuplicate,
+  onBack
 }) => {
+  const router = useRouter();
   const editorRef = useRef<HTMLDivElement>(null);
   const [view, setView] = useState<'edit' | 'preview'>('edit');
   const [linkUrl, setLinkUrl] = useState('');
@@ -180,30 +185,48 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
     }
   };
 
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      router.back();
+    }
+  };
+
   return (
     <div 
       className="rounded-lg border bg-card text-card-foreground shadow-sm"
       onContextMenu={handleContextMenu}
     >
       <div className="flex items-center justify-between p-2 border-b bg-background">
-        <div className="flex items-center gap-2">
-          {isEditingTitle ? (
-            <Input
-              value={currentTitle}
-              onChange={(e) => setCurrentTitle(e.target.value)}
-              onBlur={handleTitleBlur}
-              onKeyDown={handleTitleKeyDown}
-              className="h-8 w-[200px]"
-              autoFocus
-            />
-          ) : (
-            <h2 
-              className="text-lg font-semibold cursor-pointer hover:text-primary"
-              onClick={handleTitleClick}
-            >
-              {currentTitle}
-            </h2>
-          )}
+        <div className="flex items-center gap-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 text-muted-foreground hover:text-foreground"
+            onClick={handleBack}
+          >
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+          <div className="flex items-center gap-2">
+            {isEditingTitle ? (
+              <Input
+                value={currentTitle}
+                onChange={(e) => setCurrentTitle(e.target.value)}
+                onBlur={handleTitleBlur}
+                onKeyDown={handleTitleKeyDown}
+                className="h-8 w-[200px]"
+                autoFocus
+              />
+            ) : (
+              <h2 
+                className="text-lg font-semibold cursor-pointer hover:text-primary"
+                onClick={handleTitleClick}
+              >
+                {currentTitle}
+              </h2>
+            )}
+          </div>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -572,6 +595,24 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
           [contenteditable="true"]:focus {
             outline: none;
             box-shadow: 0 0 0 2px hsl(var(--ring));
+          }
+
+          /* Estilos específicos para o botão de voltar */
+          .back-button {
+            transition: all 0.2s ease;
+          }
+
+          .back-button:hover {
+            transform: translateX(-2px);
+          }
+
+          /* Ajustes para tema escuro */
+          .dark .back-button {
+            color: hsl(var(--muted-foreground));
+          }
+
+          .dark .back-button:hover {
+            color: hsl(var(--foreground));
           }
         `}
       </style>
