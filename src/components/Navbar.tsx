@@ -2,20 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { 
-  Menu, 
-  X, 
-  Sun, 
-  Moon, 
-  Calendar, 
-  Wallet, 
-  FileText, 
-  Home, 
-  CheckSquare, 
-  Repeat, 
-  Settings,
-  ChevronRight
-} from "lucide-react";
+import * as LucideIcons from "lucide-react";
 
 interface NavbarProps {
   isDarkMode: boolean;
@@ -57,6 +44,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
   `.replace(/\s+/g, ' ').trim();
 
   const iconClasses = `
+    inline-block
     mr-2
     h-4 w-4
     text-focusdark dark:text-white
@@ -83,6 +71,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
   `.replace(/\s+/g, ' ').trim();
 
   const mobileIconClasses = `
+    inline-block
     mr-2
     h-5 w-5
     text-focusdark dark:text-white
@@ -105,35 +94,35 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
           {!isMobile && (
             <div className="hidden md:flex items-center space-x-4">
               <Link to="/" className={navLinkClasses}>
-                <Home strokeWidth={2} className={iconClasses} />
+                <LucideIcons.Home className={iconClasses} />
                 Home
               </Link>
               <Link to="/tasks" className={navLinkClasses}>
-                <CheckSquare strokeWidth={2} className={iconClasses} />
+                <LucideIcons.CheckSquare className={iconClasses} />
                 Tarefas
               </Link>
               <Link to="/habits" className={navLinkClasses}>
-                <Repeat strokeWidth={2} className={iconClasses} />
+                <LucideIcons.Repeat className={iconClasses} />
                 Hábitos
               </Link>
               <Link to="/routines" className={navLinkClasses}>
-                <Repeat strokeWidth={2} className={iconClasses} />
+                <LucideIcons.Repeat className={iconClasses} />
                 Rotinas
               </Link>
               <Link to="/financial" className={navLinkClasses}>
-                <Wallet strokeWidth={2} className={iconClasses} />
+                <LucideIcons.Wallet className={iconClasses} />
                 Finanças
               </Link>
               <Link to="/calendar" className={navLinkClasses}>
-                <Calendar strokeWidth={2} className={iconClasses} />
+                <LucideIcons.Calendar className={iconClasses} />
                 Calendário
               </Link>
               <Link to="/notes" className={navLinkClasses}>
-                <FileText strokeWidth={2} className={iconClasses} />
+                <LucideIcons.FileText className={iconClasses} />
                 Bloco de Notas
               </Link>
               <Link to="/settings" className={navLinkClasses}>
-                <Settings strokeWidth={2} className={iconClasses} />
+                <LucideIcons.Settings className={iconClasses} />
                 Configurações
               </Link>
               <Button 
@@ -142,7 +131,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
                 onClick={toggleDarkMode}
                 className="ml-2 transition-all duration-300 hover:bg-accent/10 hover:rotate-[360deg]"
               >
-                {isDarkMode ? <Sun size={20} strokeWidth={2} /> : <Moon size={20} strokeWidth={2} />}
+                {isDarkMode ? <LucideIcons.Sun size={20} /> : <LucideIcons.Moon size={20} />}
               </Button>
               <Button 
                 variant="default" 
@@ -160,7 +149,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={toggleDarkMode}
               className="mr-2 transition-all duration-300 hover:bg-accent/10 hover:rotate-[360deg]"
             >
-              {isDarkMode ? <Sun size={20} strokeWidth={2} /> : <Moon size={20} strokeWidth={2} />}
+              {isDarkMode ? <LucideIcons.Sun size={20} /> : <LucideIcons.Moon size={20} />}
             </Button>
             <Button 
               variant="ghost" 
@@ -168,7 +157,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={toggleMenu}
               className="transition-all duration-300 hover:bg-accent/10"
             >
-              {isMenuOpen ? <X size={24} strokeWidth={2} /> : <Menu size={24} strokeWidth={2} />}
+              {isMenuOpen ? <LucideIcons.X size={24} /> : <LucideIcons.Menu size={24} />}
             </Button>
           </div>
         </div>
@@ -183,7 +172,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Home strokeWidth={2} className={mobileIconClasses} />
+              <LucideIcons.Home className={mobileIconClasses} />
               Home
             </Link>
             <Link 
@@ -191,7 +180,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <CheckSquare strokeWidth={2} className={mobileIconClasses} />
+              <LucideIcons.CheckSquare className={mobileIconClasses} />
               Tarefas
             </Link>
             <Link 
@@ -199,7 +188,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Repeat strokeWidth={2} className={mobileIconClasses} />
+              <LucideIcons.Repeat className={mobileIconClasses} />
               Hábitos
             </Link>
             <Link 
@@ -207,7 +196,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Repeat strokeWidth={2} className={mobileIconClasses} />
+              <LucideIcons.Repeat className={mobileIconClasses} />
               Rotinas
             </Link>
             <Link 
@@ -215,7 +204,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Wallet strokeWidth={2} className={mobileIconClasses} />
+              <LucideIcons.Wallet className={mobileIconClasses} />
               Finanças
             </Link>
             <Link 
@@ -223,7 +212,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Calendar strokeWidth={2} className={mobileIconClasses} />
+              <LucideIcons.Calendar className={mobileIconClasses} />
               Calendário
             </Link>
             <Link 
@@ -231,7 +220,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <FileText strokeWidth={2} className={mobileIconClasses} />
+              <LucideIcons.FileText className={mobileIconClasses} />
               Bloco de Notas
             </Link>
             <Link 
@@ -239,7 +228,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Settings strokeWidth={2} className={mobileIconClasses} />
+              <LucideIcons.Settings className={mobileIconClasses} />
               Configurações
             </Link>
             <Button 
