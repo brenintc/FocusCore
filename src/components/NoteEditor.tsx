@@ -12,7 +12,11 @@ import {
   Image,
   Quote,
   Palette,
-  Type
+  Type,
+  Edit,
+  Trash,
+  Copy,
+  MoreHorizontal
 } from 'lucide-react';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -32,16 +36,34 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface NoteEditorProps {
   initialContent: string;
+  title?: string;
   onChange: (content: string) => void;
+  onTitleChange?: (title: string) => void;
+  onDelete?: () => void;
+  onDuplicate?: () => void;
 }
 
-export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange }) => {
+export const NoteEditor: React.FC<NoteEditorProps> = ({ 
+  initialContent, 
+  title = "Nova Nota", 
+  onChange, 
+  onTitleChange,
+  onDelete,
+  onDuplicate
+}) => {
   const editorRef = useRef<HTMLDivElement>(null);
   const [view, setView] = useState<'edit' | 'preview'>('edit');
   const [linkUrl, setLinkUrl] = useState('');
@@ -49,6 +71,10 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
   const [linkPopoverOpen, setLinkPopoverOpen] = useState(false);
   const [imageUrl, setImageUrl] = useState('');
   const [imagePopoverOpen, setImagePopoverOpen] = useState(false);
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [currentTitle, setCurrentTitle] = useState(title);
+  const [contextMenuPosition, setContextMenuPosition] = useState({ x: 0, y: 0 });
+  const [showContextMenu, setShowContextMenu] = useState(false);
 
   // Cores predefinidas para texto e destaque
   const colors = [
@@ -75,6 +101,10 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
       document.execCommand('defaultParagraphSeparator', false, 'p');
     }
   }, [initialContent]);
+
+  useEffect(() => {
+    setCurrentTitle(title);
+  }, [title]);
 
   const handleContentChange = () => {
     if (editorRef.current) {
@@ -109,8 +139,90 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
     }
   };
 
+  const handleContextMenu = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setContextMenuPosition({ x: e.clientX, y: e.clientY });
+    setShowContextMenu(true);
+  };
+
+  const handleTitleChange = (newTitle: string) => {
+    setCurrentTitle(newTitle);
+    onTitleChange?.(newTitle);
+    setIsEditingTitle(false);
+  };
+
+  const handleTitleClick = () => {
+    setIsEditingTitle(true);
+  };
+
+  const handleTitleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    handleTitleChange(e.target.value);
+  };
+
+  const handleTitleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleTitleChange(e.currentTarget.value);
+    }
+  };
+
   return (
-    <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+    <div 
+      className="rounded-lg border bg-card text-card-foreground shadow-sm"
+      onContextMenu={handleContextMenu}
+    >
+      <div className="flex items-center justify-between p-2 border-b bg-background">
+        <div className="flex items-center gap-2">
+          {isEditingTitle ? (
+            <Input
+              value={currentTitle}
+              onChange={(e) => setCurrentTitle(e.target.value)}
+              onBlur={handleTitleBlur}
+              onKeyDown={handleTitleKeyDown}
+              className="h-8 w-[200px]"
+              autoFocus
+            />
+          ) : (
+            <h2 
+              className="text-lg font-semibold cursor-pointer hover:text-primary"
+              onClick={handleTitleClick}
+            >
+              {currentTitle}
+            </h2>
+          )}
+        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="h-8 w-8">
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setIsEditingTitle(true)}>
+              <Edit className="h-4 w-4 mr-2" />
+              Renomear
+            </DropdownMenuItem>
+            {onDuplicate && (
+              <DropdownMenuItem onClick={onDuplicate}>
+                <Copy className="h-4 w-4 mr-2" />
+                Duplicar
+              </DropdownMenuItem>
+            )}
+            {onDelete && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  onClick={onDelete}
+                  className="text-destructive focus:text-destructive"
+                >
+                  <Trash className="h-4 w-4 mr-2" />
+                  Excluir
+                </DropdownMenuItem>
+              </>
+            )}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
       <Tabs value={view} onValueChange={(v) => setView(v as 'edit' | 'preview')}>
         <div className="flex flex-wrap items-center gap-2 p-2 border-b bg-background">
           <TabsList className="mr-auto">
