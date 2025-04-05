@@ -30,6 +30,9 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const navLinkClasses = "nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-300 hover:bg-accent/5 rounded-md relative before:absolute before:bottom-0 before:left-0 before:w-full before:h-[2px] before:bg-focusblue before:scale-x-0 hover:before:scale-x-100 before:transition-transform before:duration-300 before:origin-left";
+  const mobileNavLinkClasses = "nav-link text-focusdark dark:text-white hover:bg-focuslight/50 dark:hover:bg-gray-700/50 px-3 py-2 rounded-md text-base font-medium flex items-center transition-all duration-300";
+
   return (
     <nav className="bg-white dark:bg-focusdark sticky top-0 z-50 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,35 +45,35 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
           
           {!isMobile && (
             <div className="hidden md:flex items-center space-x-4">
-              <Link to="/" className="nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-200 hover:bg-accent/10 rounded-md">
+              <Link to="/" className={navLinkClasses}>
                 <Home className="mr-1 h-4 w-4" />
                 Home
               </Link>
-              <Link to="/tasks" className="nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-200 hover:bg-accent/10 rounded-md">
+              <Link to="/tasks" className={navLinkClasses}>
                 <CheckSquare className="mr-1 h-4 w-4" />
                 Tarefas
               </Link>
-              <Link to="/habits" className="nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-200 hover:bg-accent/10 rounded-md">
+              <Link to="/habits" className={navLinkClasses}>
                 <Repeat className="mr-1 h-4 w-4" />
                 Hábitos
               </Link>
-              <Link to="/routines" className="nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-200 hover:bg-accent/10 rounded-md">
+              <Link to="/routines" className={navLinkClasses}>
                 <Repeat className="mr-1 h-4 w-4" />
                 Rotinas
               </Link>
-              <Link to="/financial" className="nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-200 hover:bg-accent/10 rounded-md">
+              <Link to="/financial" className={navLinkClasses}>
                 <Wallet className="mr-1 h-4 w-4" />
                 Finanças
               </Link>
-              <Link to="/calendar" className="nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-200 hover:bg-accent/10 rounded-md">
+              <Link to="/calendar" className={navLinkClasses}>
                 <Calendar className="mr-1 h-4 w-4" />
                 Calendário
               </Link>
-              <Link to="/notes" className="nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-200 hover:bg-accent/10 rounded-md">
+              <Link to="/notes" className={navLinkClasses}>
                 <FileText className="mr-1 h-4 w-4" />
                 Bloco de Notas
               </Link>
-              <Link to="/settings" className="nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-200 hover:bg-accent/10 rounded-md">
+              <Link to="/settings" className={navLinkClasses}>
                 <Settings className="mr-1 h-4 w-4" />
                 Configurações
               </Link>
@@ -118,7 +121,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
           <div className="flex flex-col space-y-2">
             <Link 
               to="/" 
-              className="nav-link text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center transition-all duration-200"
+              className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
               <Home className="mr-2 h-5 w-5" />
@@ -126,7 +129,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
             </Link>
             <Link 
               to="/tasks" 
-              className="nav-link text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center transition-all duration-200"
+              className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
               <CheckSquare className="mr-2 h-5 w-5" />
@@ -134,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
             </Link>
             <Link 
               to="/habits" 
-              className="nav-link text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center transition-all duration-200"
+              className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
               <Repeat className="mr-2 h-5 w-5" />
@@ -142,7 +145,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
             </Link>
             <Link 
               to="/routines" 
-              className="nav-link text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center transition-all duration-200"
+              className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
               <Repeat className="mr-2 h-5 w-5" />
@@ -150,7 +153,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
             </Link>
             <Link 
               to="/financial" 
-              className="nav-link text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center transition-all duration-200"
+              className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
               <Wallet className="mr-2 h-5 w-5" />
@@ -158,7 +161,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
             </Link>
             <Link 
               to="/calendar" 
-              className="nav-link text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center transition-all duration-200"
+              className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
               <Calendar className="mr-2 h-5 w-5" />
@@ -166,7 +169,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
             </Link>
             <Link 
               to="/notes" 
-              className="nav-link text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center transition-all duration-200"
+              className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
               <FileText className="mr-2 h-5 w-5" />
@@ -174,7 +177,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
             </Link>
             <Link 
               to="/settings" 
-              className="nav-link text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center transition-all duration-200"
+              className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
               <Settings className="mr-2 h-5 w-5" />
