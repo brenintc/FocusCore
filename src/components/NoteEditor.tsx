@@ -315,14 +315,89 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
                     <TooltipContent>Tachado</TooltipContent>
                   </Tooltip>
 
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <ToggleGroupItem value="highlight" aria-label="Marcador" onClick={() => execCommand('hiliteColor', '#ffff00')}>
-                        <Highlighter className="h-4 w-4" />
-                      </ToggleGroupItem>
-                    </TooltipTrigger>
-                    <TooltipContent>Marcador</TooltipContent>
-                  </Tooltip>
+                  <Popover>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <PopoverTrigger asChild>
+                            <ToggleGroupItem value="highlight" aria-label="Marcador">
+                              <Highlighter className="h-4 w-4" />
+                            </ToggleGroupItem>
+                          </PopoverTrigger>
+                        </TooltipTrigger>
+                        <TooltipContent>Marcador</TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                    <PopoverContent className="w-40">
+                      <div className="grid gap-4">
+                        <div className="space-y-2">
+                          <h4 className="font-medium leading-none">Cor do marcador</h4>
+                        </div>
+                        <div className="grid grid-cols-5 gap-2">
+                          <Button
+                            variant="outline"
+                            className="h-6 w-6 p-0"
+                            style={{ backgroundColor: '#ffff00' }}
+                            onClick={() => execCommand('hiliteColor', '#ffff00')}
+                          />
+                          <Button
+                            variant="outline"
+                            className="h-6 w-6 p-0"
+                            style={{ backgroundColor: '#00ff00' }}
+                            onClick={() => execCommand('hiliteColor', '#00ff00')}
+                          />
+                          <Button
+                            variant="outline"
+                            className="h-6 w-6 p-0"
+                            style={{ backgroundColor: '#00ffff' }}
+                            onClick={() => execCommand('hiliteColor', '#00ffff')}
+                          />
+                          <Button
+                            variant="outline"
+                            className="h-6 w-6 p-0"
+                            style={{ backgroundColor: '#ff00ff' }}
+                            onClick={() => execCommand('hiliteColor', '#ff00ff')}
+                          />
+                          <Button
+                            variant="outline"
+                            className="h-6 w-6 p-0"
+                            style={{ backgroundColor: '#ffa500' }}
+                            onClick={() => execCommand('hiliteColor', '#ffa500')}
+                          />
+                          <Button
+                            variant="outline"
+                            className="h-6 w-6 p-0"
+                            style={{ backgroundColor: '#ff69b4' }}
+                            onClick={() => execCommand('hiliteColor', '#ff69b4')}
+                          />
+                          <Button
+                            variant="outline"
+                            className="h-6 w-6 p-0"
+                            style={{ backgroundColor: '#98fb98' }}
+                            onClick={() => execCommand('hiliteColor', '#98fb98')}
+                          />
+                          <Button
+                            variant="outline"
+                            className="h-6 w-6 p-0"
+                            style={{ backgroundColor: '#87ceeb' }}
+                            onClick={() => execCommand('hiliteColor', '#87ceeb')}
+                          />
+                          <Button
+                            variant="outline"
+                            className="h-6 w-6 p-0"
+                            style={{ backgroundColor: '#dda0dd' }}
+                            onClick={() => execCommand('hiliteColor', '#dda0dd')}
+                          />
+                          <Button
+                            variant="outline"
+                            className="h-6 w-6 p-0"
+                            style={{ backgroundColor: '#f0e68c' }}
+                            onClick={() => execCommand('hiliteColor', '#f0e68c')}
+                          />
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
                   
                   <Separator orientation="vertical" className="h-6 mx-1" />
                   
