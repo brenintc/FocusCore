@@ -57,8 +57,10 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
   `.replace(/\s+/g, ' ').trim();
 
   const iconClasses = `
-    mr-1 h-4 w-4
-    transition-transform
+    mr-2
+    h-4 w-4
+    text-focusdark dark:text-white
+    transition-all
     duration-300
     group-hover:scale-110
     group-hover:text-focusblue
@@ -81,8 +83,10 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
   `.replace(/\s+/g, ' ').trim();
 
   const mobileIconClasses = `
-    mr-2 h-5 w-5
-    transition-transform
+    mr-2
+    h-5 w-5
+    text-focusdark dark:text-white
+    transition-all
     duration-300
     group-hover:scale-110
     group-hover:text-focusblue
@@ -101,35 +105,35 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
           {!isMobile && (
             <div className="hidden md:flex items-center space-x-4">
               <Link to="/" className={navLinkClasses}>
-                <Home className={iconClasses} />
+                <Home strokeWidth={2} className={iconClasses} />
                 Home
               </Link>
               <Link to="/tasks" className={navLinkClasses}>
-                <CheckSquare className={iconClasses} />
+                <CheckSquare strokeWidth={2} className={iconClasses} />
                 Tarefas
               </Link>
               <Link to="/habits" className={navLinkClasses}>
-                <Repeat className={iconClasses} />
+                <Repeat strokeWidth={2} className={iconClasses} />
                 Hábitos
               </Link>
               <Link to="/routines" className={navLinkClasses}>
-                <Repeat className={iconClasses} />
+                <Repeat strokeWidth={2} className={iconClasses} />
                 Rotinas
               </Link>
               <Link to="/financial" className={navLinkClasses}>
-                <Wallet className={iconClasses} />
+                <Wallet strokeWidth={2} className={iconClasses} />
                 Finanças
               </Link>
               <Link to="/calendar" className={navLinkClasses}>
-                <Calendar className={iconClasses} />
+                <Calendar strokeWidth={2} className={iconClasses} />
                 Calendário
               </Link>
               <Link to="/notes" className={navLinkClasses}>
-                <FileText className={iconClasses} />
+                <FileText strokeWidth={2} className={iconClasses} />
                 Bloco de Notas
               </Link>
               <Link to="/settings" className={navLinkClasses}>
-                <Settings className={iconClasses} />
+                <Settings strokeWidth={2} className={iconClasses} />
                 Configurações
               </Link>
               <Button 
@@ -138,7 +142,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
                 onClick={toggleDarkMode}
                 className="ml-2 transition-all duration-300 hover:bg-accent/10 hover:rotate-[360deg]"
               >
-                {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+                {isDarkMode ? <Sun size={20} strokeWidth={2} /> : <Moon size={20} strokeWidth={2} />}
               </Button>
               <Button 
                 variant="default" 
@@ -156,7 +160,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={toggleDarkMode}
               className="mr-2 transition-all duration-300 hover:bg-accent/10 hover:rotate-[360deg]"
             >
-              {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+              {isDarkMode ? <Sun size={20} strokeWidth={2} /> : <Moon size={20} strokeWidth={2} />}
             </Button>
             <Button 
               variant="ghost" 
@@ -164,7 +168,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={toggleMenu}
               className="transition-all duration-300 hover:bg-accent/10"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMenuOpen ? <X size={24} strokeWidth={2} /> : <Menu size={24} strokeWidth={2} />}
             </Button>
           </div>
         </div>
@@ -179,7 +183,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Home className={mobileIconClasses} />
+              <Home strokeWidth={2} className={mobileIconClasses} />
               Home
             </Link>
             <Link 
@@ -187,7 +191,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <CheckSquare className={mobileIconClasses} />
+              <CheckSquare strokeWidth={2} className={mobileIconClasses} />
               Tarefas
             </Link>
             <Link 
@@ -195,7 +199,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Repeat className={mobileIconClasses} />
+              <Repeat strokeWidth={2} className={mobileIconClasses} />
               Hábitos
             </Link>
             <Link 
@@ -203,7 +207,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Repeat className={mobileIconClasses} />
+              <Repeat strokeWidth={2} className={mobileIconClasses} />
               Rotinas
             </Link>
             <Link 
@@ -211,7 +215,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Wallet className={mobileIconClasses} />
+              <Wallet strokeWidth={2} className={mobileIconClasses} />
               Finanças
             </Link>
             <Link 
@@ -219,7 +223,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Calendar className={mobileIconClasses} />
+              <Calendar strokeWidth={2} className={mobileIconClasses} />
               Calendário
             </Link>
             <Link 
@@ -227,7 +231,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <FileText className={mobileIconClasses} />
+              <FileText strokeWidth={2} className={mobileIconClasses} />
               Bloco de Notas
             </Link>
             <Link 
@@ -235,7 +239,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Settings className={mobileIconClasses} />
+              <Settings strokeWidth={2} className={mobileIconClasses} />
               Configurações
             </Link>
             <Button 
