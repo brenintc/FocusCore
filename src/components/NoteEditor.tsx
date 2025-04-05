@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Bold, 
@@ -65,44 +64,23 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
       editorRef.current.innerHTML = initialContent;
       document.execCommand('styleWithCSS', false, 'true');
       document.execCommand('defaultParagraphSeparator', false, 'p');
-      // Apply direction to all elements when content is loaded
-      fixTextDirection();
+      
+      // Configurar direção inicial
+      editorRef.current.style.direction = 'ltr';
+      editorRef.current.style.textAlign = 'left';
+      editorRef.current.setAttribute('dir', 'ltr');
     }
   }, [initialContent]);
 
-  const fixTextDirection = () => {
+  const handleContentChange = () => {
     if (editorRef.current) {
-      // Apply direction to the editor container itself
-      editorRef.current.style.direction = 'ltr';
-      editorRef.current.setAttribute('dir', 'ltr');
-      editorRef.current.style.textAlign = 'left';
-      
-      // Apply to all elements inside the editor
-      const allElements = editorRef.current.querySelectorAll('*');
-      allElements.forEach(el => {
-        if (el instanceof HTMLElement) {
-          el.style.direction = 'ltr';
-          el.dir = 'ltr';
-          el.style.textAlign = 'left';
-          el.style.unicodeBidi = 'isolate';
-        }
-      });
+      onChange(editorRef.current.innerHTML);
     }
   };
 
   const execCommand = (command: string, value: string = '') => {
     document.execCommand(command, false, value);
-    fixTextDirection();
-    if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
-    }
-  };
-
-  const handleContentChange = () => {
-    fixTextDirection();
-    if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
-    }
+    handleContentChange();
   };
 
   const insertHeading = (level: 1 | 2 | 3) => {
@@ -150,6 +128,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
   const insertTable = () => {
     const table = document.createElement('table');
     table.className = 'border-collapse border border-gray-300 dark:border-gray-600';
+    table.style.direction = 'ltr';
     
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
@@ -157,6 +136,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
       const th = document.createElement('th');
       th.className = 'border border-gray-300 dark:border-gray-600 p-2 bg-gray-100 dark:bg-gray-700';
       th.contentEditable = 'true';
+      th.style.direction = 'ltr';
       headerRow.appendChild(th);
     }
     thead.appendChild(headerRow);
@@ -169,6 +149,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
         const td = document.createElement('td');
         td.className = 'border border-gray-300 dark:border-gray-600 p-2';
         td.contentEditable = 'true';
+        td.style.direction = 'ltr';
         row.appendChild(td);
       }
       tbody.appendChild(row);
@@ -204,9 +185,9 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
   };
 
   return (
-    <div className="rounded-md border" style={{ direction: 'ltr' }} dir="ltr">
-      <Tabs value={view} onValueChange={(v) => setView(v as 'edit' | 'preview')} dir="ltr">
-        <div className="flex flex-wrap items-center gap-1 p-1 border-b" dir="ltr" style={{ direction: 'ltr' }}>
+    <div className="rounded-md border">
+      <Tabs value={view} onValueChange={(v) => setView(v as 'edit' | 'preview')}>
+        <div className="flex flex-wrap items-center gap-1 p-1 border-b">
           <TabsList className="mr-auto">
             <TabsTrigger value="edit">Editar</TabsTrigger>
             <TabsTrigger value="preview">Visualizar</TabsTrigger>
@@ -494,36 +475,22 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
         <TabsContent value="edit" className="p-0">
           <div
             ref={editorRef}
-            className="min-h-[300px] max-h-[600px] overflow-y-auto p-4 outline-none prose dark:prose-invert max-w-none"
+            className="min-h-[300px] max-h-[600px] overflow-y-auto p-4 outline-none prose prose-sm dark:prose-invert max-w-none"
             contentEditable
             onInput={handleContentChange}
             onBlur={handleContentChange}
             spellCheck="true"
             data-placeholder="Comece a escrever aqui..."
+            style={{ direction: 'ltr', textAlign: 'left' }}
             dir="ltr"
-            style={{ 
-              direction: 'ltr', 
-              textAlign: 'left', 
-              unicodeBidi: 'isolate', 
-              writingMode: 'horizontal-tb'
-            }}
           />
         </TabsContent>
         
-        <TabsContent value="preview" className="p-4 min-h-[300px] max-h-[600px] overflow-y-auto prose dark:prose-invert max-w-none">
+        <TabsContent value="preview" className="p-4 min-h-[300px] max-h-[600px] overflow-y-auto prose prose-sm dark:prose-invert max-w-none">
           {initialContent ? (
-            <div 
-              dangerouslySetInnerHTML={{ __html: initialContent }} 
-              dir="ltr" 
-              style={{ 
-                direction: 'ltr', 
-                textAlign: 'left', 
-                unicodeBidi: 'isolate', 
-                writingMode: 'horizontal-tb'
-              }}
-            />
+            <div dangerouslySetInnerHTML={{ __html: initialContent }} style={{ direction: 'ltr', textAlign: 'left' }} dir="ltr" />
           ) : (
-            <p className="text-muted-foreground" dir="ltr" style={{ direction: 'ltr', textAlign: 'left' }}>Sem conteúdo para exibir.</p>
+            <p className="text-muted-foreground">Sem conteúdo para exibir.</p>
           )}
         </TabsContent>
       </Tabs>
