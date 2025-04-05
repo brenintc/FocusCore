@@ -68,7 +68,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               </Link>
               <Link to="/notes" className="nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-200 hover:bg-accent/10 rounded-md">
                 <FileText className="mr-1 h-4 w-4" />
-                Notas
+                Bloco de Notas
               </Link>
               <Link to="/settings" className="nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-200 hover:bg-accent/10 rounded-md">
                 <Settings className="mr-1 h-4 w-4" />
@@ -170,7 +170,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={() => setIsMenuOpen(false)}
             >
               <FileText className="mr-2 h-5 w-5" />
-              Notas
+              Bloco de Notas
             </Link>
             <Link 
               to="/settings" 
