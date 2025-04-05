@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Bold, 
@@ -467,18 +468,24 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
         <TabsContent value="edit" className="p-0">
           <div
             ref={editorRef}
-            className="min-h-[300px] max-h-[600px] overflow-y-auto p-4 outline-none prose prose-sm dark:prose-invert max-w-none"
+            className="min-h-[300px] max-h-[600px] overflow-y-auto p-4 outline-none prose dark:prose-invert max-w-none"
             contentEditable
             onInput={handleContentChange}
             onBlur={handleContentChange}
             spellCheck="true"
             data-placeholder="Comece a escrever aqui..."
+            dir="ltr" // Explicitly setting text direction to left-to-right
+            style={{ direction: 'ltr' }} // Adding style direction as well for extra assurance
           />
         </TabsContent>
         
-        <TabsContent value="preview" className="p-4 min-h-[300px] max-h-[600px] overflow-y-auto prose prose-sm dark:prose-invert max-w-none">
+        <TabsContent value="preview" className="p-4 min-h-[300px] max-h-[600px] overflow-y-auto prose dark:prose-invert max-w-none">
           {initialContent ? (
-            <div dangerouslySetInnerHTML={{ __html: initialContent }} />
+            <div 
+              dangerouslySetInnerHTML={{ __html: initialContent }} 
+              dir="ltr" // Ensuring preview also has correct direction
+              style={{ direction: 'ltr' }}
+            />
           ) : (
             <p className="text-muted-foreground">Sem conteúdo para exibir.</p>
           )}
