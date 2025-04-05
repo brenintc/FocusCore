@@ -1,9 +1,8 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { Menu, X, Sun, Moon, Calendar, Wallet } from "lucide-react";
+import { Menu, X, Sun, Moon, Calendar, Wallet, FileText } from "lucide-react";
 
 interface NavbarProps {
   isDarkMode: boolean;
@@ -49,6 +48,10 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               <Link to="/calendar" className="text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center">
                 <Calendar className="mr-1 h-4 w-4" />
                 Calendário
+              </Link>
+              <Link to="/notes" className="text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center">
+                <FileText className="mr-1 h-4 w-4" />
+                Notas
               </Link>
               <Button 
                 variant="ghost" 
@@ -127,6 +130,14 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
             >
               <Calendar className="mr-2 h-5 w-5" />
               Calendário
+            </Link>
+            <Link 
+              to="/notes" 
+              className="text-focusdark dark:text-white hover:bg-focuslight dark:hover:bg-gray-700 px-3 py-2 rounded-md text-base font-medium flex items-center"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <FileText className="mr-2 h-5 w-5" />
+              Notas
             </Link>
             <Button 
               variant="default" 
