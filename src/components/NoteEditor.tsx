@@ -220,6 +220,62 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
                   </SelectContent>
                 </Select>
 
+                <Select defaultValue="#000000" onValueChange={(color) => execCommand('foreColor', color)}>
+                  <SelectTrigger className="w-[100px]">
+                    <SelectValue placeholder="Cor" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="#000000">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 rounded-full bg-black" />
+                        Preto
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="#FF0000">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 rounded-full bg-red-600" />
+                        Vermelho
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="#0000FF">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 rounded-full bg-blue-600" />
+                        Azul
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="#008000">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 rounded-full bg-green-600" />
+                        Verde
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="#FFA500">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 rounded-full bg-orange-500" />
+                        Laranja
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="#800080">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 rounded-full bg-purple-600" />
+                        Roxo
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="#A52A2A">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 rounded-full bg-brown-600" />
+                        Marrom
+                      </div>
+                    </SelectItem>
+                    <SelectItem value="#808080">
+                      <div className="flex items-center gap-2">
+                        <div className="w-4 h-4 rounded-full bg-gray-500" />
+                        Cinza
+                      </div>
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+
                 <Separator orientation="vertical" className="h-6 mx-1" />
 
                 <ToggleGroup type="multiple" className="flex-wrap">
