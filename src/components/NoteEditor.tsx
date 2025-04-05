@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Bold, 
@@ -64,16 +65,26 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
       editorRef.current.innerHTML = initialContent;
       document.execCommand('styleWithCSS', false, 'true');
       document.execCommand('defaultParagraphSeparator', false, 'p');
+      // Apply direction to all elements when content is loaded
+      fixTextDirection();
     }
   }, [initialContent]);
 
   const fixTextDirection = () => {
     if (editorRef.current) {
+      // Apply direction to the editor container itself
+      editorRef.current.style.direction = 'ltr';
+      editorRef.current.setAttribute('dir', 'ltr');
+      editorRef.current.style.textAlign = 'left';
+      
+      // Apply to all elements inside the editor
       const allElements = editorRef.current.querySelectorAll('*');
       allElements.forEach(el => {
         if (el instanceof HTMLElement) {
           el.style.direction = 'ltr';
           el.dir = 'ltr';
+          el.style.textAlign = 'left';
+          el.style.unicodeBidi = 'isolate';
         }
       });
     }
@@ -193,7 +204,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
   };
 
   return (
-    <div className="rounded-md border" style={{ direction: 'ltr' }}>
+    <div className="rounded-md border" style={{ direction: 'ltr' }} dir="ltr">
       <Tabs value={view} onValueChange={(v) => setView(v as 'edit' | 'preview')} dir="ltr">
         <div className="flex flex-wrap items-center gap-1 p-1 border-b" dir="ltr" style={{ direction: 'ltr' }}>
           <TabsList className="mr-auto">
@@ -490,7 +501,12 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
             spellCheck="true"
             data-placeholder="Comece a escrever aqui..."
             dir="ltr"
-            style={{ direction: 'ltr', textAlign: 'left', unicodeBidi: 'embed' }}
+            style={{ 
+              direction: 'ltr', 
+              textAlign: 'left', 
+              unicodeBidi: 'isolate', 
+              writingMode: 'horizontal-tb'
+            }}
           />
         </TabsContent>
         
@@ -499,10 +515,15 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
             <div 
               dangerouslySetInnerHTML={{ __html: initialContent }} 
               dir="ltr" 
-              style={{ direction: 'ltr', textAlign: 'left', unicodeBidi: 'embed' }}
+              style={{ 
+                direction: 'ltr', 
+                textAlign: 'left', 
+                unicodeBidi: 'isolate', 
+                writingMode: 'horizontal-tb'
+              }}
             />
           ) : (
-            <p className="text-muted-foreground" dir="ltr" style={{ direction: 'ltr' }}>Sem conteúdo para exibir.</p>
+            <p className="text-muted-foreground" dir="ltr" style={{ direction: 'ltr', textAlign: 'left' }}>Sem conteúdo para exibir.</p>
           )}
         </TabsContent>
       </Tabs>

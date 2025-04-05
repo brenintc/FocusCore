@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@/components/UserProvider';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
@@ -42,6 +41,41 @@ const Notes: React.FC = () => {
       localStorage.setItem(`focuscore-${userId}-notes`, JSON.stringify(notes));
     }
   }, [notes, userId]);
+
+  // Apply LTR text direction to all notes content when loaded or saved
+  useEffect(() => {
+    const fixNotesTextDirection = () => {
+      const updatedNotes = notes.map(note => {
+        if (note.content) {
+          // Create a temporary div to manipulate the HTML
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = note.content;
+          
+          // Fix direction for all elements
+          tempDiv.querySelectorAll('*').forEach(el => {
+            if (el instanceof HTMLElement) {
+              el.style.direction = 'ltr';
+              el.dir = 'ltr';
+              el.style.textAlign = 'left';
+              el.style.unicodeBidi = 'isolate';
+            }
+          });
+          
+          return {
+            ...note,
+            content: tempDiv.innerHTML
+          };
+        }
+        return note;
+      });
+      
+      if (JSON.stringify(updatedNotes) !== JSON.stringify(notes)) {
+        setNotes(updatedNotes);
+      }
+    };
+    
+    fixNotesTextDirection();
+  }, [notes]);
 
   const createNewNote = () => {
     if (!newNoteTitle.trim()) {
