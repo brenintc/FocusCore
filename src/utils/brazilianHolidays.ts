@@ -1,4 +1,3 @@
-
 // Lista de feriados nacionais brasileiros
 // Esta é uma implementação básica, considera apenas os feriados fixos
 // Para feriados móveis (Páscoa, Carnaval, etc) seria necessário um cálculo mais complexo
@@ -86,3 +85,6 @@ export const isHoliday = (date: Date, holidays: Holiday[]): Holiday | null => {
   const holiday = holidays.find(h => h.date === monthDay);
   return holiday || null;
 };
+
+// Export the current year's holidays for convenience
+export const brazilianHolidays = getBrazilianHolidays(new Date().getFullYear());
