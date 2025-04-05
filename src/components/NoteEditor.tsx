@@ -466,7 +466,11 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
             style={{ 
               padding: '1rem',
               borderRadius: '0.375rem',
+              direction: 'ltr',
+              textAlign: 'left',
+              unicodeBidi: 'isolate'
             }}
+            dir="ltr"
           />
         </TabsContent>
         
@@ -475,6 +479,12 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
             <div 
               dangerouslySetInnerHTML={{ __html: initialContent }} 
               className="text-foreground dark:text-foreground editor-content"
+              style={{ 
+                direction: 'ltr',
+                textAlign: 'left',
+                unicodeBidi: 'isolate'
+              }}
+              dir="ltr"
             />
           ) : (
             <p className="text-muted-foreground dark:text-muted-foreground">Sem conteúdo para exibir.</p>
@@ -485,6 +495,9 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
       <style>
         {`
           .editor-content.prose {
+            direction: ltr;
+            text-align: left;
+            unicode-bidi: isolate;
             --tw-prose-body: hsl(var(--foreground));
             --tw-prose-headings: hsl(var(--foreground));
             --tw-prose-lead: hsl(var(--foreground));
@@ -504,6 +517,9 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
           }
 
           .dark .editor-content.prose {
+            direction: ltr;
+            text-align: left;
+            unicode-bidi: isolate;
             --tw-prose-body: hsl(var(--foreground));
             --tw-prose-headings: hsl(var(--foreground));
             --tw-prose-lead: hsl(var(--foreground));
