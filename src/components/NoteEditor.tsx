@@ -65,15 +65,19 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
       document.execCommand('styleWithCSS', false, 'true');
       document.execCommand('defaultParagraphSeparator', false, 'p');
       
-      // Configurar direção inicial
-      editorRef.current.style.direction = 'ltr';
-      editorRef.current.style.textAlign = 'left';
-      editorRef.current.setAttribute('dir', 'ltr');
+      // Configurar direção RTL
+      editorRef.current.style.direction = 'rtl';
+      editorRef.current.style.textAlign = 'right';
+      editorRef.current.setAttribute('dir', 'rtl');
     }
   }, [initialContent]);
 
   const handleContentChange = () => {
     if (editorRef.current) {
+      // Garantir que a direção RTL seja mantida após mudanças
+      editorRef.current.style.direction = 'rtl';
+      editorRef.current.style.textAlign = 'right';
+      editorRef.current.setAttribute('dir', 'rtl');
       onChange(editorRef.current.innerHTML);
     }
   };
@@ -613,15 +617,15 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
             spellCheck="true"
             data-placeholder="Comece a escrever aqui..."
             style={{ 
-              direction: 'ltr', 
-              textAlign: 'left',
+              direction: 'rtl', 
+              textAlign: 'right',
               backgroundColor: 'white',
               color: 'black',
               padding: '1rem',
               borderRadius: '0.375rem',
               boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)'
             }}
-            dir="ltr"
+            dir="rtl"
           />
         </TabsContent>
         
@@ -630,15 +634,15 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
             <div 
               dangerouslySetInnerHTML={{ __html: initialContent }} 
               style={{ 
-                direction: 'ltr', 
-                textAlign: 'left',
+                direction: 'rtl', 
+                textAlign: 'right',
                 backgroundColor: 'white',
                 color: 'black',
                 padding: '1rem',
                 borderRadius: '0.375rem',
                 boxShadow: 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)'
               }} 
-              dir="ltr"
+              dir="rtl"
               className="bg-white text-black" 
             />
           ) : (
