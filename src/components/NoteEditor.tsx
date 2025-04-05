@@ -1,4 +1,3 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Bold, 
@@ -61,19 +60,35 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
   const [fontFamily, setFontFamily] = useState('Inter');
 
   useEffect(() => {
-    if (editorRef.current && initialContent) {
+    if (editorRef.current) {
       editorRef.current.innerHTML = initialContent;
+      document.execCommand('styleWithCSS', false, 'true');
+      document.execCommand('defaultParagraphSeparator', false, 'p');
     }
   }, [initialContent]);
 
+  const fixTextDirection = () => {
+    if (editorRef.current) {
+      const allElements = editorRef.current.querySelectorAll('*');
+      allElements.forEach(el => {
+        if (el instanceof HTMLElement) {
+          el.style.direction = 'ltr';
+          el.dir = 'ltr';
+        }
+      });
+    }
+  };
+
   const execCommand = (command: string, value: string = '') => {
     document.execCommand(command, false, value);
+    fixTextDirection();
     if (editorRef.current) {
       onChange(editorRef.current.innerHTML);
     }
   };
 
   const handleContentChange = () => {
+    fixTextDirection();
     if (editorRef.current) {
       onChange(editorRef.current.innerHTML);
     }
@@ -178,9 +193,9 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
   };
 
   return (
-    <div className="rounded-md border">
-      <Tabs value={view} onValueChange={(v) => setView(v as 'edit' | 'preview')}>
-        <div className="flex flex-wrap items-center gap-1 p-1 border-b">
+    <div className="rounded-md border" style={{ direction: 'ltr' }}>
+      <Tabs value={view} onValueChange={(v) => setView(v as 'edit' | 'preview')} dir="ltr">
+        <div className="flex flex-wrap items-center gap-1 p-1 border-b" dir="ltr" style={{ direction: 'ltr' }}>
           <TabsList className="mr-auto">
             <TabsTrigger value="edit">Editar</TabsTrigger>
             <TabsTrigger value="preview">Visualizar</TabsTrigger>
@@ -474,8 +489,8 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
             onBlur={handleContentChange}
             spellCheck="true"
             data-placeholder="Comece a escrever aqui..."
-            dir="ltr" // Explicitly setting text direction to left-to-right
-            style={{ direction: 'ltr' }} // Adding style direction as well for extra assurance
+            dir="ltr"
+            style={{ direction: 'ltr', textAlign: 'left', unicodeBidi: 'embed' }}
           />
         </TabsContent>
         
@@ -483,11 +498,11 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
           {initialContent ? (
             <div 
               dangerouslySetInnerHTML={{ __html: initialContent }} 
-              dir="ltr" // Ensuring preview also has correct direction
-              style={{ direction: 'ltr' }}
+              dir="ltr" 
+              style={{ direction: 'ltr', textAlign: 'left', unicodeBidi: 'embed' }}
             />
           ) : (
-            <p className="text-muted-foreground">Sem conteúdo para exibir.</p>
+            <p className="text-muted-foreground" dir="ltr" style={{ direction: 'ltr' }}>Sem conteúdo para exibir.</p>
           )}
         </TabsContent>
       </Tabs>
