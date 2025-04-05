@@ -30,8 +30,63 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const navLinkClasses = "nav-link text-focusdark dark:text-white hover:text-focusblue px-3 py-2 text-sm font-medium flex items-center transition-all duration-300 hover:bg-accent/5 rounded-md relative before:absolute before:bottom-0 before:left-0 before:w-full before:h-[2px] before:bg-focusblue before:scale-x-0 hover:before:scale-x-100 before:transition-transform before:duration-300 before:origin-left";
-  const mobileNavLinkClasses = "nav-link text-focusdark dark:text-white hover:bg-focuslight/50 dark:hover:bg-gray-700/50 px-3 py-2 rounded-md text-base font-medium flex items-center transition-all duration-300";
+  const navLinkClasses = `
+    nav-link 
+    text-focusdark dark:text-white 
+    hover:text-focusblue dark:hover:text-focusblue
+    px-3 py-2 
+    text-sm font-medium 
+    flex items-center 
+    transition-all duration-300 
+    rounded-md 
+    relative 
+    group
+    hover:bg-accent/5
+    dark:hover:bg-white/5
+    before:absolute
+    before:bottom-0
+    before:left-0
+    before:w-full
+    before:h-[2px]
+    before:bg-focusblue
+    before:origin-left
+    before:scale-x-0
+    hover:before:scale-x-100
+    before:transition-transform
+    before:duration-300
+  `.replace(/\s+/g, ' ').trim();
+
+  const iconClasses = `
+    mr-1 h-4 w-4
+    transition-transform
+    duration-300
+    group-hover:scale-110
+    group-hover:text-focusblue
+  `.replace(/\s+/g, ' ').trim();
+
+  const mobileNavLinkClasses = `
+    nav-link 
+    text-focusdark dark:text-white 
+    hover:text-focusblue dark:hover:text-focusblue
+    px-3 py-2 
+    rounded-md 
+    text-base font-medium 
+    flex items-center 
+    transition-all duration-300
+    hover:bg-focuslight/30
+    dark:hover:bg-white/10
+    hover:translate-x-1
+    relative
+    group
+  `.replace(/\s+/g, ' ').trim();
+
+  const mobileIconClasses = `
+    mr-2 h-5 w-5
+    transition-transform
+    duration-300
+    group-hover:scale-110
+    group-hover:text-focusblue
+  `.replace(/\s+/g, ' ').trim();
 
   return (
     <nav className="bg-white dark:bg-focusdark sticky top-0 z-50 shadow-sm transition-all duration-300">
@@ -46,48 +101,48 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
           {!isMobile && (
             <div className="hidden md:flex items-center space-x-4">
               <Link to="/" className={navLinkClasses}>
-                <Home className="mr-1 h-4 w-4" />
+                <Home className={iconClasses} />
                 Home
               </Link>
               <Link to="/tasks" className={navLinkClasses}>
-                <CheckSquare className="mr-1 h-4 w-4" />
+                <CheckSquare className={iconClasses} />
                 Tarefas
               </Link>
               <Link to="/habits" className={navLinkClasses}>
-                <Repeat className="mr-1 h-4 w-4" />
+                <Repeat className={iconClasses} />
                 Hábitos
               </Link>
               <Link to="/routines" className={navLinkClasses}>
-                <Repeat className="mr-1 h-4 w-4" />
+                <Repeat className={iconClasses} />
                 Rotinas
               </Link>
               <Link to="/financial" className={navLinkClasses}>
-                <Wallet className="mr-1 h-4 w-4" />
+                <Wallet className={iconClasses} />
                 Finanças
               </Link>
               <Link to="/calendar" className={navLinkClasses}>
-                <Calendar className="mr-1 h-4 w-4" />
+                <Calendar className={iconClasses} />
                 Calendário
               </Link>
               <Link to="/notes" className={navLinkClasses}>
-                <FileText className="mr-1 h-4 w-4" />
+                <FileText className={iconClasses} />
                 Bloco de Notas
               </Link>
               <Link to="/settings" className={navLinkClasses}>
-                <Settings className="mr-1 h-4 w-4" />
+                <Settings className={iconClasses} />
                 Configurações
               </Link>
               <Button 
                 variant="ghost" 
                 size="icon" 
                 onClick={toggleDarkMode}
-                className="ml-2 transition-all duration-200 hover:bg-accent/10"
+                className="ml-2 transition-all duration-300 hover:bg-accent/10 hover:rotate-[360deg]"
               >
                 {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
               </Button>
               <Button 
                 variant="default" 
-                className="bg-focusblue hover:bg-blue-700 ml-2 transition-all duration-200 hover:scale-105 animate-scale"
+                className="bg-focusblue hover:bg-blue-700 ml-2 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-scale"
               >
                 Começar
               </Button>
@@ -99,7 +154,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               variant="ghost" 
               size="icon" 
               onClick={toggleDarkMode}
-              className="mr-2 transition-all duration-200 hover:bg-accent/10"
+              className="mr-2 transition-all duration-300 hover:bg-accent/10 hover:rotate-[360deg]"
             >
               {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
             </Button>
@@ -107,7 +162,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               variant="ghost" 
               size="icon" 
               onClick={toggleMenu}
-              className="transition-all duration-200 hover:bg-accent/10"
+              className="transition-all duration-300 hover:bg-accent/10"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </Button>
@@ -124,7 +179,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Home className="mr-2 h-5 w-5" />
+              <Home className={mobileIconClasses} />
               Home
             </Link>
             <Link 
@@ -132,7 +187,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <CheckSquare className="mr-2 h-5 w-5" />
+              <CheckSquare className={mobileIconClasses} />
               Tarefas
             </Link>
             <Link 
@@ -140,7 +195,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Repeat className="mr-2 h-5 w-5" />
+              <Repeat className={mobileIconClasses} />
               Hábitos
             </Link>
             <Link 
@@ -148,7 +203,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Repeat className="mr-2 h-5 w-5" />
+              <Repeat className={mobileIconClasses} />
               Rotinas
             </Link>
             <Link 
@@ -156,7 +211,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Wallet className="mr-2 h-5 w-5" />
+              <Wallet className={mobileIconClasses} />
               Finanças
             </Link>
             <Link 
@@ -164,7 +219,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Calendar className="mr-2 h-5 w-5" />
+              <Calendar className={mobileIconClasses} />
               Calendário
             </Link>
             <Link 
@@ -172,7 +227,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <FileText className="mr-2 h-5 w-5" />
+              <FileText className={mobileIconClasses} />
               Bloco de Notas
             </Link>
             <Link 
@@ -180,12 +235,12 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               className={mobileNavLinkClasses}
               onClick={() => setIsMenuOpen(false)}
             >
-              <Settings className="mr-2 h-5 w-5" />
+              <Settings className={mobileIconClasses} />
               Configurações
             </Link>
             <Button 
               variant="default" 
-              className="bg-focusblue hover:bg-blue-700 w-full mt-4 transition-all duration-200 hover:scale-105 animate-scale"
+              className="bg-focusblue hover:bg-blue-700 w-full mt-4 transition-all duration-300 hover:scale-105 hover:shadow-lg animate-scale"
               onClick={() => setIsMenuOpen(false)}
             >
               Começar
