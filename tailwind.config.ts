@@ -104,8 +104,46 @@ export default {
         'accordion-up': 'accordion-up 0.2s ease-out',
         'fade-in': 'fadeIn 0.5s ease-out forwards',
         'slide-up': 'slideUp 0.5s ease-out forwards'
-      }
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: 'none',
+            color: 'inherit',
+            a: {
+              color: 'hsl(var(--primary))',
+              textDecoration: 'underline',
+              fontWeight: '500',
+            },
+            h1: {
+              fontWeight: '700',
+              fontSize: '1.75rem',
+            },
+            h2: {
+              fontWeight: '600',
+              fontSize: '1.5rem',
+            },
+            h3: {
+              fontWeight: '600',
+              fontSize: '1.25rem',
+            },
+            code: {
+              color: 'hsl(var(--foreground))',
+              backgroundColor: 'hsl(var(--muted))',
+              borderRadius: '0.25rem',
+              padding: '0.15rem 0.3rem',
+            },
+            pre: {
+              backgroundColor: 'hsl(var(--secondary))',
+              borderRadius: '0.5rem',
+            },
+          },
+        },
+      },
     }
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require('@tailwindcss/typography'),
+  ],
 } satisfies Config;

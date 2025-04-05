@@ -291,7 +291,7 @@
   }
 
   .note-editor .preview {
-    @apply min-h-[300px] max-h-[600px] overflow-y-auto p-4 prose prose-sm dark:prose-invert max-w-none;
+    @apply min-h-[300px] max-h-[600px] overflow-y-auto p-4;
   }
 
   .note-editor .preview:empty:before {

@@ -59,14 +59,12 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
   const [fontSize, setFontSize] = useState('16px');
   const [fontFamily, setFontFamily] = useState('Inter');
 
-  // Initialize editor with initial content
   useEffect(() => {
     if (editorRef.current && initialContent) {
       editorRef.current.innerHTML = initialContent;
     }
   }, [initialContent]);
 
-  // Execute command on the document
   const execCommand = (command: string, value: string = '') => {
     document.execCommand(command, false, value);
     if (editorRef.current) {
@@ -74,19 +72,16 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
     }
   };
 
-  // Handle content changes
   const handleContentChange = () => {
     if (editorRef.current) {
       onChange(editorRef.current.innerHTML);
     }
   };
 
-  // Insert heading
   const insertHeading = (level: 1 | 2 | 3) => {
     execCommand('formatBlock', `<h${level}>`);
   };
 
-  // Insert link
   const insertLink = () => {
     if (linkUrl && linkText) {
       const selection = window.getSelection();
@@ -107,7 +102,6 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
     }
   };
 
-  // Insert image
   const insertImage = () => {
     if (imageUrl) {
       const selection = window.getSelection();
@@ -126,12 +120,10 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
     }
   };
 
-  // Insert table
   const insertTable = () => {
     const table = document.createElement('table');
     table.className = 'border-collapse border border-gray-300 dark:border-gray-600';
     
-    // Create header row
     const thead = document.createElement('thead');
     const headerRow = document.createElement('tr');
     for (let i = 0; i < 3; i++) {
@@ -143,7 +135,6 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
     thead.appendChild(headerRow);
     table.appendChild(thead);
     
-    // Create body rows
     const tbody = document.createElement('tbody');
     for (let i = 0; i < 3; i++) {
       const row = document.createElement('tr');
@@ -166,7 +157,6 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
     }
   };
 
-  // Change font size
   const changeFontSize = (size: string) => {
     setFontSize(size);
     document.execCommand('fontSize', false, '7');
@@ -180,7 +170,6 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
     handleContentChange();
   };
 
-  // Change font family
   const changeFontFamily = (family: string) => {
     setFontFamily(family);
     document.execCommand('fontName', false, family);
