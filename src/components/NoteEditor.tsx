@@ -99,6 +99,14 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
       editorRef.current.innerHTML = initialContent;
       document.execCommand('styleWithCSS', false, 'true');
       document.execCommand('defaultParagraphSeparator', false, 'p');
+      
+      // Configurar direção do texto
+      const elements = editorRef.current.getElementsByTagName('*');
+      for (let i = 0; i < elements.length; i++) {
+        const element = elements[i] as HTMLElement;
+        element.style.direction = 'ltr';
+        element.style.textAlign = 'left';
+      }
     }
   }, [initialContent]);
 
@@ -108,6 +116,13 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
 
   const handleContentChange = () => {
     if (editorRef.current) {
+      // Garantir direção correta ao editar
+      const elements = editorRef.current.getElementsByTagName('*');
+      for (let i = 0; i < elements.length; i++) {
+        const element = elements[i] as HTMLElement;
+        element.style.direction = 'ltr';
+        element.style.textAlign = 'left';
+      }
       onChange(editorRef.current.innerHTML);
     }
   };
@@ -466,11 +481,10 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
             style={{ 
               padding: '1rem',
               borderRadius: '0.375rem',
+              writingMode: 'horizontal-tb',
               direction: 'ltr',
-              textAlign: 'left',
-              unicodeBidi: 'isolate'
+              textAlign: 'left'
             }}
-            dir="ltr"
           />
         </TabsContent>
         
@@ -480,11 +494,10 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
               dangerouslySetInnerHTML={{ __html: initialContent }} 
               className="text-foreground dark:text-foreground editor-content"
               style={{ 
+                writingMode: 'horizontal-tb',
                 direction: 'ltr',
-                textAlign: 'left',
-                unicodeBidi: 'isolate'
+                textAlign: 'left'
               }}
-              dir="ltr"
             />
           ) : (
             <p className="text-muted-foreground dark:text-muted-foreground">Sem conteúdo para exibir.</p>
@@ -495,9 +508,9 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
       <style>
         {`
           .editor-content.prose {
+            writing-mode: horizontal-tb;
             direction: ltr;
             text-align: left;
-            unicode-bidi: isolate;
             --tw-prose-body: hsl(var(--foreground));
             --tw-prose-headings: hsl(var(--foreground));
             --tw-prose-lead: hsl(var(--foreground));
@@ -517,9 +530,9 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
           }
 
           .dark .editor-content.prose {
+            writing-mode: horizontal-tb;
             direction: ltr;
             text-align: left;
-            unicode-bidi: isolate;
             --tw-prose-body: hsl(var(--foreground));
             --tw-prose-headings: hsl(var(--foreground));
             --tw-prose-lead: hsl(var(--foreground));
@@ -536,6 +549,18 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({
             --tw-prose-pre-bg: hsl(var(--muted));
             --tw-prose-th-borders: hsl(var(--border));
             --tw-prose-td-borders: hsl(var(--border));
+          }
+
+          [contenteditable="true"] {
+            writing-mode: horizontal-tb !important;
+            direction: ltr !important;
+            text-align: left !important;
+          }
+
+          [contenteditable="true"] * {
+            writing-mode: horizontal-tb !important;
+            direction: ltr !important;
+            text-align: left !important;
           }
 
           [contenteditable="true"]:empty:before {
