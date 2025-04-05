@@ -110,9 +110,9 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
   };
 
   return (
-    <div className="rounded-lg border bg-white shadow-sm">
+    <div className="rounded-lg border bg-card text-card-foreground shadow-sm">
       <Tabs value={view} onValueChange={(v) => setView(v as 'edit' | 'preview')}>
-        <div className="flex flex-wrap items-center gap-2 p-2 border-b">
+        <div className="flex flex-wrap items-center gap-2 p-2 border-b bg-background">
           <TabsList className="mr-auto">
             <TabsTrigger value="edit">Editar</TabsTrigger>
             <TabsTrigger value="preview">Visualizar</TabsTrigger>
@@ -122,7 +122,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
             <TooltipProvider>
               <div className="flex flex-wrap items-center gap-2">
                 {/* Formatação de texto básica */}
-                <ToggleGroup type="multiple" className="flex-wrap">
+                <ToggleGroup type="multiple" className="flex-wrap bg-background">
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <ToggleGroupItem value="bold" onClick={() => execCommand('bold')}>
@@ -345,32 +345,83 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
         <TabsContent value="edit" className="p-0">
           <div
             ref={editorRef}
-            className="min-h-[300px] max-h-[600px] overflow-y-auto p-4 outline-none prose prose-sm max-w-none bg-white"
+            className="min-h-[300px] max-h-[600px] overflow-y-auto p-4 outline-none prose prose-sm dark:prose-invert max-w-none bg-background dark:bg-background editor-content"
             contentEditable
             onInput={handleContentChange}
             onBlur={handleContentChange}
             spellCheck="true"
             data-placeholder="Comece a escrever aqui..."
             style={{ 
-              backgroundColor: 'white',
-              color: 'black',
               padding: '1rem',
               borderRadius: '0.375rem',
             }}
           />
         </TabsContent>
         
-        <TabsContent value="preview" className="p-4 min-h-[300px] max-h-[600px] overflow-y-auto prose prose-sm max-w-none bg-white">
+        <TabsContent value="preview" className="p-4 min-h-[300px] max-h-[600px] overflow-y-auto prose prose-sm dark:prose-invert max-w-none bg-background dark:bg-background">
           {initialContent ? (
             <div 
               dangerouslySetInnerHTML={{ __html: initialContent }} 
-              className="bg-white text-black"
+              className="text-foreground dark:text-foreground editor-content"
             />
           ) : (
-            <p className="text-muted-foreground">Sem conteúdo para exibir.</p>
+            <p className="text-muted-foreground dark:text-muted-foreground">Sem conteúdo para exibir.</p>
           )}
         </TabsContent>
       </Tabs>
+
+      <style>
+        {`
+          .editor-content.prose {
+            --tw-prose-body: hsl(var(--foreground));
+            --tw-prose-headings: hsl(var(--foreground));
+            --tw-prose-lead: hsl(var(--foreground));
+            --tw-prose-links: hsl(var(--primary));
+            --tw-prose-bold: hsl(var(--foreground));
+            --tw-prose-counters: hsl(var(--foreground));
+            --tw-prose-bullets: hsl(var(--foreground));
+            --tw-prose-hr: hsl(var(--border));
+            --tw-prose-quotes: hsl(var(--foreground));
+            --tw-prose-quote-borders: hsl(var(--border));
+            --tw-prose-captions: hsl(var(--muted-foreground));
+            --tw-prose-code: hsl(var(--foreground));
+            --tw-prose-pre-code: hsl(var(--foreground));
+            --tw-prose-pre-bg: hsl(var(--muted));
+            --tw-prose-th-borders: hsl(var(--border));
+            --tw-prose-td-borders: hsl(var(--border));
+          }
+
+          .dark .editor-content.prose {
+            --tw-prose-body: hsl(var(--foreground));
+            --tw-prose-headings: hsl(var(--foreground));
+            --tw-prose-lead: hsl(var(--foreground));
+            --tw-prose-links: hsl(var(--primary));
+            --tw-prose-bold: hsl(var(--foreground));
+            --tw-prose-counters: hsl(var(--foreground));
+            --tw-prose-bullets: hsl(var(--foreground));
+            --tw-prose-hr: hsl(var(--border));
+            --tw-prose-quotes: hsl(var(--foreground));
+            --tw-prose-quote-borders: hsl(var(--border));
+            --tw-prose-captions: hsl(var(--muted-foreground));
+            --tw-prose-code: hsl(var(--foreground));
+            --tw-prose-pre-code: hsl(var(--foreground));
+            --tw-prose-pre-bg: hsl(var(--muted));
+            --tw-prose-th-borders: hsl(var(--border));
+            --tw-prose-td-borders: hsl(var(--border));
+          }
+
+          [contenteditable="true"]:empty:before {
+            content: attr(data-placeholder);
+            color: hsl(var(--muted-foreground));
+            pointer-events: none;
+          }
+
+          [contenteditable="true"]:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px hsl(var(--ring));
+          }
+        `}
+      </style>
     </div>
   );
 };
