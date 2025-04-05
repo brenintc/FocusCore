@@ -12,7 +12,7 @@ import Habits from "./pages/Habits";
 import Routines from "./pages/Routines";
 import Settings from "./pages/Settings";
 import Financial from "./pages/Financial";
-import Calendar from "./pages/Calendar";
+import { Calendar } from "./pages/Calendar";  // Change from default to named import
 import Notes from "./pages/Notes";
 import NotFound from "./pages/NotFound";
 import Navbar from "./components/Navbar";
