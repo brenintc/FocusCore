@@ -59,9 +59,14 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
   const [fontSize, setFontSize] = useState('16px');
   const [fontFamily, setFontFamily] = useState('Inter');
 
+  const reverseText = (text: string) => {
+    return text.split('').reverse().join('');
+  };
+
   useEffect(() => {
     if (editorRef.current) {
-      editorRef.current.innerHTML = initialContent;
+      const reversedContent = reverseText(initialContent);
+      editorRef.current.innerHTML = reversedContent;
       document.execCommand('styleWithCSS', false, 'true');
       document.execCommand('defaultParagraphSeparator', false, 'p');
       
@@ -74,11 +79,32 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
 
   const handleContentChange = () => {
     if (editorRef.current) {
+      const currentText = editorRef.current.innerText;
+      const reversedText = reverseText(currentText);
+      
+      // Manter a seleção atual
+      const selection = window.getSelection();
+      const range = selection?.getRangeAt(0);
+      const startOffset = range?.startOffset;
+      
+      // Atualizar o conteúdo com o texto invertido
+      editorRef.current.innerText = reversedText;
+      
+      // Restaurar a seleção
+      if (selection && range && startOffset !== undefined) {
+        const newRange = document.createRange();
+        newRange.setStart(editorRef.current.firstChild || editorRef.current, reversedText.length - startOffset);
+        newRange.collapse(true);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+      }
+      
       // Garantir que a direção RTL seja mantida após mudanças
       editorRef.current.style.direction = 'rtl';
       editorRef.current.style.textAlign = 'right';
       editorRef.current.setAttribute('dir', 'rtl');
-      onChange(editorRef.current.innerHTML);
+      
+      onChange(reversedText);
     }
   };
 
@@ -632,7 +658,7 @@ export const NoteEditor: React.FC<NoteEditorProps> = ({ initialContent, onChange
         <TabsContent value="preview" className="p-4 min-h-[300px] max-h-[600px] overflow-y-auto prose prose-sm dark:prose-invert max-w-none bg-white text-black">
           {initialContent ? (
             <div 
-              dangerouslySetInnerHTML={{ __html: initialContent }} 
+              dangerouslySetInnerHTML={{ __html: reverseText(initialContent) }} 
               style={{ 
                 direction: 'rtl', 
                 textAlign: 'right',
