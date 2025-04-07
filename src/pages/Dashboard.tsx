@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@/components/UserProvider';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Calendar, BarChart2, Settings, Wallet, DollarSign } from 'lucide-react';
+import { toast } from "@/hooks/use-toast";
 
 interface Transaction {
   id: string;
@@ -21,13 +23,32 @@ const Dashboard: React.FC = () => {
   const [totalFixedIncome, setTotalFixedIncome] = useState(0);
 
   useEffect(() => {
-    const savedTransactions = localStorage.getItem(`focuscore-${userId}-transactions`);
-    if (savedTransactions) {
-      const transactions: Transaction[] = JSON.parse(savedTransactions);
-      const fixed = transactions.filter(t => t.type === 'fixed-income');
-      setFixedIncomes(fixed);
-      setTotalFixedIncome(fixed.reduce((sum, t) => sum + t.amount, 0));
-    }
+    const loadFixedIncomes = () => {
+      try {
+        const savedTransactions = localStorage.getItem(`focuscore-${userId}-transactions`);
+        console.log('Loaded transactions from localStorage:', savedTransactions);
+        
+        if (savedTransactions) {
+          const transactions: Transaction[] = JSON.parse(savedTransactions);
+          const fixed = transactions.filter(t => t.type === 'fixed-income');
+          console.log('Fixed income transactions:', fixed);
+          
+          setFixedIncomes(fixed);
+          setTotalFixedIncome(fixed.reduce((sum, t) => sum + t.amount, 0));
+        } else {
+          console.log('No transactions found in localStorage');
+        }
+      } catch (error) {
+        console.error('Error loading transactions:', error);
+        toast({
+          title: "Erro ao carregar receitas fixas",
+          description: "Não foi possível carregar suas receitas fixas",
+          variant: "destructive",
+        });
+      }
+    };
+
+    loadFixedIncomes();
   }, [userId]);
 
   const formatCurrency = (value: number) => {

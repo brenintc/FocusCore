@@ -19,7 +19,14 @@ import Footer from "./components/Footer";
 import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 import { UserProvider } from "./components/UserProvider";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const AppContent = () => {
   const { theme, toggleTheme } = useTheme();
