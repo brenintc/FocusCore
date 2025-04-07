@@ -9,7 +9,6 @@ import {
   Moon, 
   Calendar, 
   Wallet, 
-  FileText, 
   Home, 
   CheckSquare, 
   Repeat, 
@@ -127,10 +126,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
                 <Calendar className={iconClasses} />
                 Calendário
               </Link>
-              <Link to="/notes" className={navLinkClasses}>
-                <FileText className={iconClasses} />
-                Bloco de Notas
-              </Link>
               <Link to="/settings" className={navLinkClasses}>
                 <Settings className={iconClasses} />
                 Configurações
@@ -165,7 +160,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
         </div>
       </div>
       
-      {/* Mobile menu */}
       {isMobile && isMenuOpen && (
         <div className="md:hidden bg-white dark:bg-focusdark pt-2 pb-4 px-4 shadow-lg animate-slide-down">
           <div className="flex flex-col space-y-2">
@@ -216,14 +210,6 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
             >
               <Calendar className={mobileIconClasses} />
               Calendário
-            </Link>
-            <Link 
-              to="/notes" 
-              className={mobileNavLinkClasses}
-              onClick={() => setIsMenuOpen(false)}
-            >
-              <FileText className={mobileIconClasses} />
-              Bloco de Notas
             </Link>
             <Link 
               to="/settings" 

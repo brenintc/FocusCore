@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@/components/UserProvider';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, Calendar, BarChart2, Settings, Wallet, FileText, DollarSign } from 'lucide-react';
+import { CheckCircle, Calendar, BarChart2, Settings, Wallet, DollarSign } from 'lucide-react';
 
 interface Transaction {
   id: string;
@@ -22,7 +21,6 @@ const Dashboard: React.FC = () => {
   const [totalFixedIncome, setTotalFixedIncome] = useState(0);
 
   useEffect(() => {
-    // Carregar transações do localStorage
     const savedTransactions = localStorage.getItem(`focuscore-${userId}-transactions`);
     if (savedTransactions) {
       const transactions: Transaction[] = JSON.parse(savedTransactions);
@@ -35,7 +33,7 @@ const Dashboard: React.FC = () => {
   const formatCurrency = (value: number) => {
     return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   };
-  
+
   return (
     <div className="min-h-screen bg-white dark:bg-focusdark py-8 px-4">
       <div className="max-w-4xl mx-auto">
@@ -48,7 +46,6 @@ const Dashboard: React.FC = () => {
           </p>
         </div>
         
-        {/* Card de Receitas Fixas */}
         <Card className="mb-8 hover:shadow-md transition-all duration-200">
           <CardHeader className="pb-2">
             <CardTitle className="flex items-center text-xl">
