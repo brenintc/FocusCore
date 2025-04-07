@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@/components/UserProvider';
 import { Button } from "@/components/ui/button";
@@ -176,24 +177,6 @@ const Dashboard: React.FC = () => {
                 className="w-full bg-focusblue"
               >
                 Acessar Calendário
-              </Button>
-            </CardContent>
-          </Card>
-          
-          <Card className="hover:shadow-md transition-all duration-200 hover:-translate-y-1">
-            <CardHeader className="pb-2">
-              <CardTitle className="flex items-center text-xl">
-                <FileText className="mr-2 h-5 w-5 text-focusblue" />
-                Bloco de Notas
-              </CardTitle>
-              <CardDescription>Organize suas anotações e ideias</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button 
-                onClick={() => navigate('/notes')} 
-                className="w-full bg-focusblue"
-              >
-                Acessar Notas
               </Button>
             </CardContent>
           </Card>
