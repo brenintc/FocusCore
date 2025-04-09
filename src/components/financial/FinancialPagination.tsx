@@ -76,6 +76,7 @@ const FinancialPagination: React.FC<FinancialPaginationProps> = ({
             <PaginationLink 
               isActive={activeTab === tab.value}
               onClick={() => setActiveTab(tab.value)}
+              className="cursor-pointer"
             >
               {tab.label}
             </PaginationLink>
