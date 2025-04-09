@@ -226,39 +226,30 @@ const Financial: React.FC = () => {
                 <CardTitle>Resumo Financeiro</CardTitle>
                 <CardDescription>Visão geral das suas finanças</CardDescription>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium">Total Investido:</span>
-                    <span className="text-sm font-bold">{formatCurrency(totalInvested)}</span>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium">Transações Recentes:</span>
-                    <span className="text-sm font-bold">{transactions.length}</span>
-                  </div>
-                  
-                  <div className="flex justify-between space-x-4">
-                    <Button 
-                      onClick={() => setActiveTab("transactions")} 
-                      variant="outline" 
-                      className="flex-1"
-                    >
-                      <ArrowRightLeft className="mr-2 h-4 w-4" />
-                      Gerenciar Transações
-                    </Button>
-                    
-                    <Button 
-                      onClick={() => setActiveTab("investments")} 
-                      variant="outline" 
-                      className="flex-1"
-                    >
-                      <LineChart className="mr-2 h-4 w-4" />
-                      Gerenciar Investimentos
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
+<CardContent>
+  <div className="space-y-4">
+    <div className="flex flex-col md:flex-row md:space-x-4">
+      <Button 
+        onClick={() => setActiveTab("transactions")} 
+        variant="outline" 
+        className="flex-1 mb-2 md:mb-0"
+      >
+        <ArrowRightLeft className="mr-2 h-4 w-4" />
+        Gerenciar Transações
+      </Button>
+      
+      <Button 
+        onClick={() => setActiveTab("investments")} 
+        variant="outline" 
+        className="flex-1"
+      >
+        <LineChart className="mr-2 h-4 w-4" />
+        Gerenciar Investimentos
+      </Button>
+    </div>
+  </div>
+</CardContent>
+
             </Card>
           </TabsContent>
           
