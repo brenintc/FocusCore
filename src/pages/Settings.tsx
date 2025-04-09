@@ -3,11 +3,19 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '@/components/UserProvider';
 import { useTheme } from '@/components/ThemeProvider';
+import { useLanguage } from '@/components/LanguageProvider';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Moon, Sun, User, Trash2, Smartphone, Download, Upload } from 'lucide-react';
+import { ArrowLeft, Moon, Sun, User, Trash2, Smartphone, Download, Upload, Globe } from 'lucide-react';
 import { toast } from "sonner";
 import { exportUserData, importUserData } from '../utils/mobileSync';
 import { 
@@ -25,6 +33,7 @@ import {
 const Settings: React.FC = () => {
   const { userName, setUserName, userId } = useUser();
   const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
   const [name, setName] = useState(userName);
   const [backupData, setBackupData] = useState<string>('');
@@ -32,7 +41,7 @@ const Settings: React.FC = () => {
   const handleUpdateName = () => {
     if (name.trim()) {
       setUserName(name.trim());
-      toast.success("Nome atualizado com sucesso!");
+      toast.success(language === 'pt-BR' ? "Nome atualizado com sucesso!" : "Name updated successfully!");
     }
   };
   
@@ -51,7 +60,7 @@ const Settings: React.FC = () => {
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     
-    toast.success("Dados exportados com sucesso!");
+    toast.success(t('settings.exportData') + " " + (language === 'pt-BR' ? "com sucesso!" : "successful!"));
   };
   
   const handleImportData = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -64,11 +73,15 @@ const Settings: React.FC = () => {
       if (content) {
         const success = importUserData(userId, content);
         if (success) {
-          toast.success("Dados importados com sucesso! Recarregando a página...");
+          toast.success(language === 'pt-BR' 
+            ? "Dados importados com sucesso! Recarregando a página..." 
+            : "Data imported successfully! Reloading the page...");
           // Recarregar a página para aplicar as alterações
           setTimeout(() => window.location.reload(), 1500);
         } else {
-          toast.error("Erro ao importar dados. Verifique o arquivo.");
+          toast.error(language === 'pt-BR'
+            ? "Erro ao importar dados. Verifique o arquivo."
+            : "Error importing data. Check the file.");
         }
       }
     };
@@ -82,6 +95,10 @@ const Settings: React.FC = () => {
     window.location.href = '/';
   };
   
+  const handleLanguageChange = (value: string) => {
+    setLanguage(value as 'pt-BR' | 'en-US' | 'es-ES' | 'fr-FR' | 'de-DE');
+  };
+  
   return (
     <div className="min-h-screen bg-white dark:bg-focusdark py-8 px-4">
       <div className="max-w-4xl mx-auto">
@@ -90,13 +107,13 @@ const Settings: React.FC = () => {
           onClick={() => navigate('/dashboard')}
           className="mb-4"
         >
-          <ArrowLeft className="mr-2 h-4 w-4" /> Voltar
+          <ArrowLeft className="mr-2 h-4 w-4" /> {t('nav.back')}
         </Button>
         
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-focusdark dark:text-white">Configurações</h1>
+          <h1 className="text-3xl font-bold text-focusdark dark:text-white">{t('settings.title')}</h1>
           <p className="mt-2 text-gray-600 dark:text-gray-300">
-            Personalize sua experiência no FocusCore
+            {t('settings.personalize')}
           </p>
         </div>
         
@@ -105,14 +122,14 @@ const Settings: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <User className="mr-2 h-5 w-5" />
-                Perfil
+                {t('settings.profile')}
               </CardTitle>
-              <CardDescription>Atualize suas informações pessoais</CardDescription>
+              <CardDescription>{t('settings.updatePersonal')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-1">
-                  Seu nome
+                  {t('settings.yourName')}
                 </label>
                 <div className="flex space-x-2">
                   <Input
@@ -122,14 +139,14 @@ const Settings: React.FC = () => {
                     className="flex-grow"
                   />
                   <Button onClick={handleUpdateName}>
-                    Atualizar
+                    {t('settings.update')}
                   </Button>
                 </div>
               </div>
               
               <div className="text-sm text-gray-500">
-                <p>ID do usuário: {userId}</p>
-                <p className="mt-1">Este ID é usado para identificar seus dados localmente.</p>
+                <p>{t('settings.userId')}: {userId}</p>
+                <p className="mt-1">{t('settings.userIdDesc')}</p>
               </div>
             </CardContent>
           </Card>
@@ -138,14 +155,13 @@ const Settings: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center">
                 <Smartphone className="mr-2 h-5 w-5" />
-                Sincronização Mobile
+                {t('settings.sync')}
               </CardTitle>
-              <CardDescription>Exporte e importe seus dados entre dispositivos</CardDescription>
+              <CardDescription>{t('settings.syncDesc')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm">
-                Você pode transferir seus dados entre diferentes dispositivos exportando um arquivo de backup 
-                e importando-o em outro dispositivo onde o FocusCore esteja instalado.
+                {t('settings.syncText')}
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -154,7 +170,7 @@ const Settings: React.FC = () => {
                   className="flex items-center justify-center"
                 >
                   <Download className="mr-2 h-4 w-4" />
-                  Exportar Dados
+                  {t('settings.exportData')}
                 </Button>
                 
                 <div className="relative">
@@ -170,13 +186,13 @@ const Settings: React.FC = () => {
                     variant="outline"
                   >
                     <Upload className="mr-2 h-4 w-4" />
-                    Importar Dados
+                    {t('settings.importData')}
                   </Button>
                 </div>
               </div>
               
               <div className="mt-4 text-sm text-gray-500">
-                <p>Para usar o app como aplicativo nativo em seu smartphone:</p>
+                <p>{t('settings.mobileUse')}:</p>
                 <ol className="list-decimal pl-5 mt-2 space-y-1">
                   <li>Exporte seus dados usando o botão acima</li>
                   <li>Acesse este mesmo site em seu smartphone</li>
@@ -191,21 +207,45 @@ const Settings: React.FC = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center">
+                <Globe className="mr-2 h-5 w-5" />
+                {t('settings.language')}
+              </CardTitle>
+              <CardDescription>{t('settings.languageDesc')}</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Select value={language} onValueChange={handleLanguageChange}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pt-BR">{t('languages.pt')}</SelectItem>
+                  <SelectItem value="en-US">{t('languages.en')}</SelectItem>
+                  <SelectItem value="es-ES">{t('languages.es')}</SelectItem>
+                  <SelectItem value="fr-FR">{t('languages.fr')}</SelectItem>
+                  <SelectItem value="de-DE">{t('languages.de')}</SelectItem>
+                </SelectContent>
+              </Select>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center">
                 {theme === 'dark' ? (
                   <Moon className="mr-2 h-5 w-5" />
                 ) : (
                   <Sun className="mr-2 h-5 w-5" />
                 )}
-                Aparência
+                {t('settings.appearance')}
               </CardTitle>
-              <CardDescription>Personalize o tema visual</CardDescription>
+              <CardDescription>{t('settings.customizeTheme')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium">Modo escuro</p>
+                  <p className="font-medium">{t('settings.darkMode')}</p>
                   <p className="text-sm text-gray-500">
-                    {theme === 'dark' ? 'Ativado' : 'Desativado'}
+                    {theme === 'dark' ? t('settings.enabled') : t('settings.disabled')}
                   </p>
                 </div>
                 <Switch
@@ -220,36 +260,35 @@ const Settings: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center text-red-500">
                 <Trash2 className="mr-2 h-5 w-5" />
-                Redefinir dados
+                {t('settings.reset')}
               </CardTitle>
-              <CardDescription>Limpar todos os dados salvos</CardDescription>
+              <CardDescription>{t('settings.clearData')}</CardDescription>
             </CardHeader>
             <CardContent>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button variant="destructive">
-                    Redefinir todos os dados
+                    {t('settings.resetAll')}
                   </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                   <AlertDialogHeader>
-                    <AlertDialogTitle>Você tem certeza?</AlertDialogTitle>
+                    <AlertDialogTitle>{t('settings.confirmation')}</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Esta ação não pode ser desfeita. Isso irá apagar permanentemente todas as suas
-                      tarefas, hábitos e rotinas salvos neste dispositivo.
+                      {t('settings.confirmationDesc')}
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>
-                    <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                    <AlertDialogCancel>{t('settings.cancel')}</AlertDialogCancel>
                     <AlertDialogAction onClick={handleReset}>
-                      Sim, apagar tudo
+                      {t('settings.confirm')}
                     </AlertDialogAction>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
             </CardContent>
             <CardFooter className="text-sm text-gray-500">
-              Todos os dados são armazenados apenas no seu dispositivo.
+              {t('settings.localData')}
             </CardFooter>
           </Card>
         </div>
