@@ -1,9 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { useUser } from '@/components/UserProvider';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -18,10 +17,9 @@ import {
   BarChart4
 } from 'lucide-react';
 import { toast } from "sonner";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
+import FinancialPagination from '@/components/financial/FinancialPagination';
+import { useIsMobile } from '@/hooks/use-mobile';
 
-// Definição dos tipos
 interface Transaction {
   id: string;
   type: 'income' | 'expense' | 'fixed-expense' | 'fixed-income' | 'investment';
@@ -43,7 +41,9 @@ interface Investment {
 
 const Financial: React.FC = () => {
   const { userId } = useUser();
+  const isMobile = useIsMobile();
   const [activeTab, setActiveTab] = useState("overview");
+  
   const [transactions, setTransactions] = useState<Transaction[]>(() => {
     const savedTransactions = localStorage.getItem(`focuscore-${userId}-transactions`);
     return savedTransactions ? JSON.parse(savedTransactions) : [];
@@ -71,17 +71,21 @@ const Financial: React.FC = () => {
     notes: ''
   });
 
-  // Salvar transações no localStorage quando elas mudarem
+  const tabs = [
+    { value: "overview", label: "Visão Geral" },
+    { value: "transactions", label: "Transações" },
+    { value: "fixed", label: "Receitas e Despesas Fixas" },
+    { value: "investments", label: "Investimentos" }
+  ];
+
   useEffect(() => {
     localStorage.setItem(`focuscore-${userId}-transactions`, JSON.stringify(transactions));
   }, [transactions, userId]);
 
-  // Salvar investimentos no localStorage quando eles mudarem
   useEffect(() => {
     localStorage.setItem(`focuscore-${userId}-investments`, JSON.stringify(investments));
   }, [investments, userId]);
 
-  // Funções para manipular transações
   const handleAddTransaction = () => {
     if (!newTransaction.description || newTransaction.amount <= 0) {
       toast.error("Por favor, preencha a descrição e valor corretamente");
@@ -111,7 +115,6 @@ const Financial: React.FC = () => {
     toast.success("Transação removida com sucesso!");
   };
 
-  // Funções para manipular investimentos
   const handleAddInvestment = () => {
     if (!newInvestment.name || newInvestment.amount <= 0) {
       toast.error("Por favor, preencha o nome e valor do investimento corretamente");
@@ -143,7 +146,6 @@ const Financial: React.FC = () => {
     toast.success("Investimento removido com sucesso!");
   };
 
-  // Cálculos financeiros
   const totalIncome = transactions
     .filter(t => t.type === 'income' || t.type === 'fixed-income')
     .reduce((sum, t) => sum + t.amount, 0);
@@ -156,7 +158,6 @@ const Financial: React.FC = () => {
   
   const totalInvested = investments.reduce((sum, inv) => sum + inv.amount, 0);
   
-  // Funções para formatar valores monetários
   const formatCurrency = (value: number) => {
     return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   };
@@ -168,15 +169,13 @@ const Financial: React.FC = () => {
           Gestão Financeira
         </h1>
         
-        <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid grid-cols-4 mb-8">
-            <TabsTrigger value="overview">Visão Geral</TabsTrigger>
-            <TabsTrigger value="transactions">Transações</TabsTrigger>
-            <TabsTrigger value="fixed">Receitas e Despesas Fixas</TabsTrigger>
-            <TabsTrigger value="investments">Investimentos</TabsTrigger>
-          </TabsList>
-          
-          {/* Tab: Visão Geral */}
+        <FinancialPagination 
+          activeTab={activeTab} 
+          setActiveTab={setActiveTab} 
+          tabs={tabs} 
+        />
+        
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsContent value="overview" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <Card className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900">
@@ -261,7 +260,6 @@ const Financial: React.FC = () => {
             </Card>
           </TabsContent>
           
-          {/* Tab: Transações */}
           <TabsContent value="transactions" className="space-y-6">
             <Card>
               <CardHeader>
@@ -399,7 +397,6 @@ const Financial: React.FC = () => {
             </Card>
           </TabsContent>
           
-          {/* Tab: Receitas e Despesas Fixas */}
           <TabsContent value="fixed" className="space-y-6">
             <Card>
               <CardHeader>
@@ -573,7 +570,6 @@ const Financial: React.FC = () => {
             </Card>
           </TabsContent>
           
-          {/* Tab: Investimentos */}
           <TabsContent value="investments" className="space-y-6">
             <Card>
               <CardHeader>
