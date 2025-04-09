@@ -45,7 +45,7 @@ const NavigationGrid: React.FC = () => {
       description: 'Personalize sua experiência',
       path: '/settings',
       icon: Settings,
-      buttonVariant: 'outline',
+      buttonVariant: 'outline' as const,
       buttonText: 'Configurar',
       buttonClassName: '',
     },
