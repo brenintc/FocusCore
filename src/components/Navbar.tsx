@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -18,14 +19,30 @@ import {
 interface NavbarProps {
   isDarkMode: boolean;
   toggleDarkMode: () => void;
+  routeTitles?: {
+    dashboard: string;
+    tasks: string;
+    habits: string;
+    routines: string;
+    financial: string;
+    calendar: string;
+    settings: string;
+  };
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
+const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode, routeTitles }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  // Default titles if routeTitles is not provided
+  const titles = routeTitles || {
+    dashboard: 'Dashboard',
+    tasks: 'Tarefas',
+    habits: 'Hábitos',
+    routines: 'Rotinas',
+    financial: 'Finanças',
+    calendar: 'Calendário',
+    settings: 'Configurações'
   };
 
   const navLinkClasses = `
@@ -108,27 +125,27 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               </Link>
               <Link to="/tasks" className={navLinkClasses}>
                 <CheckSquare className={iconClasses} />
-                Tarefas
+                {titles.tasks}
               </Link>
               <Link to="/habits" className={navLinkClasses}>
                 <Repeat className={iconClasses} />
-                Hábitos
+                {titles.habits}
               </Link>
               <Link to="/routines" className={navLinkClasses}>
                 <Repeat className={iconClasses} />
-                Rotinas
+                {titles.routines}
               </Link>
               <Link to="/financial" className={navLinkClasses}>
                 <Wallet className={iconClasses} />
-                Finanças
+                {titles.financial}
               </Link>
               <Link to="/calendar" className={navLinkClasses}>
                 <Calendar className={iconClasses} />
-                Calendário
+                {titles.calendar}
               </Link>
               <Link to="/settings" className={navLinkClasses}>
                 <Settings className={iconClasses} />
-                Configurações
+                {titles.settings}
               </Link>
               <Button 
                 variant="ghost" 
@@ -177,7 +194,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={() => setIsMenuOpen(false)}
             >
               <CheckSquare className={mobileIconClasses} />
-              Tarefas
+              {titles.tasks}
             </Link>
             <Link 
               to="/habits" 
@@ -185,7 +202,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={() => setIsMenuOpen(false)}
             >
               <Repeat className={mobileIconClasses} />
-              Hábitos
+              {titles.habits}
             </Link>
             <Link 
               to="/routines" 
@@ -193,7 +210,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={() => setIsMenuOpen(false)}
             >
               <Repeat className={mobileIconClasses} />
-              Rotinas
+              {titles.routines}
             </Link>
             <Link 
               to="/financial" 
@@ -201,7 +218,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={() => setIsMenuOpen(false)}
             >
               <Wallet className={mobileIconClasses} />
-              Finanças
+              {titles.financial}
             </Link>
             <Link 
               to="/calendar" 
@@ -209,7 +226,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={() => setIsMenuOpen(false)}
             >
               <Calendar className={mobileIconClasses} />
-              Calendário
+              {titles.calendar}
             </Link>
             <Link 
               to="/settings" 
@@ -217,7 +234,7 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode }) => {
               onClick={() => setIsMenuOpen(false)}
             >
               <Settings className={mobileIconClasses} />
-              Configurações
+              {titles.settings}
             </Link>
             <Button 
               variant="default" 

@@ -1,8 +1,17 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from "@/components/LanguageProvider";
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  language?: string;
+}
+
+const Footer: React.FC<FooterProps> = ({ language }) => {
+  // If language prop is not provided, use the language from context
+  const languageContext = useLanguage();
+  const currentLanguage = language || languageContext.language;
+  
   return (
     <footer className="bg-focuslight dark:bg-focusdark py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -12,20 +21,38 @@ const Footer: React.FC = () => {
               <span className="text-focusblue dark:text-white text-xl font-bold">Focus<span className="text-focusdark dark:text-focusblue">Core</span></span>
             </Link>
             <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">
-              Gestão completa de produtividade pessoal.
+              {currentLanguage === 'pt-BR' ? 'Gestão completa de produtividade pessoal.' :
+               currentLanguage === 'es-ES' ? 'Gestión completa de productividad personal.' :
+               currentLanguage === 'fr-FR' ? 'Gestion complète de la productivité personnelle.' :
+               currentLanguage === 'de-DE' ? 'Umfassendes persönliches Produktivitätsmanagement.' :
+               'Complete personal productivity management.'}
             </p>
           </div>
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Produto</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              {currentLanguage === 'pt-BR' ? 'Produto' :
+               currentLanguage === 'es-ES' ? 'Producto' :
+               currentLanguage === 'fr-FR' ? 'Produit' :
+               currentLanguage === 'de-DE' ? 'Produkt' :
+               'Product'}
+            </h3>
             <ul className="mt-4 space-y-2">
               <li>
                 <Link to="/features" className="text-base text-gray-600 dark:text-gray-300 hover:text-focusblue">
-                  Recursos
+                  {currentLanguage === 'pt-BR' ? 'Recursos' :
+                   currentLanguage === 'es-ES' ? 'Características' :
+                   currentLanguage === 'fr-FR' ? 'Fonctionnalités' :
+                   currentLanguage === 'de-DE' ? 'Funktionen' :
+                   'Features'}
                 </Link>
               </li>
               <li>
                 <Link to="/pricing" className="text-base text-gray-600 dark:text-gray-300 hover:text-focusblue">
-                  Planos
+                  {currentLanguage === 'pt-BR' ? 'Planos' :
+                   currentLanguage === 'es-ES' ? 'Planes' :
+                   currentLanguage === 'fr-FR' ? 'Forfaits' :
+                   currentLanguage === 'de-DE' ? 'Preispläne' :
+                   'Plans'}
                 </Link>
               </li>
               <li>
@@ -36,27 +63,51 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Empresa</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              {currentLanguage === 'pt-BR' ? 'Empresa' :
+               currentLanguage === 'es-ES' ? 'Empresa' :
+               currentLanguage === 'fr-FR' ? 'Entreprise' :
+               currentLanguage === 'de-DE' ? 'Unternehmen' :
+               'Company'}
+            </h3>
             <ul className="mt-4 space-y-2">
               <li>
                 <Link to="/about" className="text-base text-gray-600 dark:text-gray-300 hover:text-focusblue">
-                  Sobre nós
+                  {currentLanguage === 'pt-BR' ? 'Sobre nós' :
+                   currentLanguage === 'es-ES' ? 'Sobre nosotros' :
+                   currentLanguage === 'fr-FR' ? 'À propos de nous' :
+                   currentLanguage === 'de-DE' ? 'Über uns' :
+                   'About us'}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="text-base text-gray-600 dark:text-gray-300 hover:text-focusblue">
-                  Contato
+                  {currentLanguage === 'pt-BR' ? 'Contato' :
+                   currentLanguage === 'es-ES' ? 'Contacto' :
+                   currentLanguage === 'fr-FR' ? 'Contact' :
+                   currentLanguage === 'de-DE' ? 'Kontakt' :
+                   'Contact'}
                 </Link>
               </li>
               <li>
                 <Link to="/privacy" className="text-base text-gray-600 dark:text-gray-300 hover:text-focusblue">
-                  Privacidade
+                  {currentLanguage === 'pt-BR' ? 'Privacidade' :
+                   currentLanguage === 'es-ES' ? 'Privacidad' :
+                   currentLanguage === 'fr-FR' ? 'Confidentialité' :
+                   currentLanguage === 'de-DE' ? 'Datenschutz' :
+                   'Privacy'}
                 </Link>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Siga-nos</h3>
+            <h3 className="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">
+              {currentLanguage === 'pt-BR' ? 'Siga-nos' :
+               currentLanguage === 'es-ES' ? 'Síguenos' :
+               currentLanguage === 'fr-FR' ? 'Suivez-nous' :
+               currentLanguage === 'de-DE' ? 'Folgen Sie uns' :
+               'Follow us'}
+            </h3>
             <div className="mt-4 flex space-x-4">
               <a href="#" className="text-gray-500 hover:text-focusblue">
                 <span className="sr-only">Twitter</span>
@@ -81,7 +132,12 @@ const Footer: React.FC = () => {
         </div>
         <div className="mt-8 border-t border-gray-200 dark:border-gray-700 pt-8">
           <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-            &copy; {new Date().getFullYear()} FocusCore. Todos os direitos reservados.
+            &copy; {new Date().getFullYear()} FocusCore. 
+            {currentLanguage === 'pt-BR' ? 'Todos os direitos reservados.' :
+             currentLanguage === 'es-ES' ? 'Todos los derechos reservados.' :
+             currentLanguage === 'fr-FR' ? 'Tous droits réservés.' :
+             currentLanguage === 'de-DE' ? 'Alle Rechte vorbehalten.' :
+             'All rights reserved.'}
           </p>
         </div>
       </div>
