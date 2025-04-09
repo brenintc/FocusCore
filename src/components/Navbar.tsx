@@ -34,6 +34,11 @@ const Navbar: React.FC<NavbarProps> = ({ isDarkMode, toggleDarkMode, routeTitles
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isMobile = useIsMobile();
 
+  // Add the missing toggleMenu function
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   // Default titles if routeTitles is not provided
   const titles = routeTitles || {
     dashboard: 'Dashboard',
