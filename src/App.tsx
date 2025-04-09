@@ -18,7 +18,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { ThemeProvider, useTheme } from "./components/ThemeProvider";
 import { UserProvider } from "./components/UserProvider";
-import { LanguageProvider } from "./components/LanguageProvider";
+import { LanguageProvider, useLanguage } from "./components/LanguageProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,7 +31,72 @@ const queryClient = new QueryClient({
 
 const AppContent = () => {
   const { theme, toggleTheme } = useTheme();
+  const { language } = useLanguage();
   const isDarkMode = theme === 'dark';
+
+  // Traduzindo os títulos das rotas
+  const getRouteTitle = (key: string) => {
+    const titles: Record<string, Record<string, string>> = {
+      'dashboard': {
+        'pt-BR': 'Painel',
+        'en-US': 'Dashboard',
+        'es-ES': 'Panel',
+        'fr-FR': 'Tableau de bord',
+        'de-DE': 'Dashboard'
+      },
+      'tasks': {
+        'pt-BR': 'Tarefas',
+        'en-US': 'Tasks',
+        'es-ES': 'Tareas',
+        'fr-FR': 'Tâches',
+        'de-DE': 'Aufgaben'
+      },
+      'habits': {
+        'pt-BR': 'Hábitos',
+        'en-US': 'Habits',
+        'es-ES': 'Hábitos',
+        'fr-FR': 'Habitudes',
+        'de-DE': 'Gewohnheiten'
+      },
+      'routines': {
+        'pt-BR': 'Rotinas',
+        'en-US': 'Routines',
+        'es-ES': 'Rutinas',
+        'fr-FR': 'Routines',
+        'de-DE': 'Routinen'
+      },
+      'financial': {
+        'pt-BR': 'Finanças',
+        'en-US': 'Financial',
+        'es-ES': 'Finanzas',
+        'fr-FR': 'Finances',
+        'de-DE': 'Finanzen'
+      },
+      'calendar': {
+        'pt-BR': 'Calendário',
+        'en-US': 'Calendar',
+        'es-ES': 'Calendario',
+        'fr-FR': 'Calendrier',
+        'de-DE': 'Kalender'
+      },
+      'settings': {
+        'pt-BR': 'Configurações',
+        'en-US': 'Settings',
+        'es-ES': 'Configuración',
+        'fr-FR': 'Paramètres',
+        'de-DE': 'Einstellungen'
+      },
+      'welcome': {
+        'pt-BR': 'Bem-vindo',
+        'en-US': 'Welcome',
+        'es-ES': 'Bienvenido',
+        'fr-FR': 'Bienvenue',
+        'de-DE': 'Willkommen'
+      }
+    };
+
+    return titles[key][language] || titles[key]['en-US'];
+  };
 
   return (
     <TooltipProvider>
@@ -39,7 +104,19 @@ const AppContent = () => {
       <Sonner />
       <BrowserRouter>
         <div className="flex flex-col min-h-screen">
-          <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleTheme} />
+          <Navbar 
+            isDarkMode={isDarkMode} 
+            toggleDarkMode={toggleTheme} 
+            routeTitles={{
+              dashboard: getRouteTitle('dashboard'),
+              tasks: getRouteTitle('tasks'),
+              habits: getRouteTitle('habits'),
+              routines: getRouteTitle('routines'),
+              financial: getRouteTitle('financial'),
+              calendar: getRouteTitle('calendar'),
+              settings: getRouteTitle('settings')
+            }}
+          />
           <div className="flex-grow">
             <Routes>
               <Route path="/" element={<Welcome />} />
@@ -53,7 +130,9 @@ const AppContent = () => {
               <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
-          <Footer />
+          <Footer 
+            language={language}
+          />
         </div>
       </BrowserRouter>
     </TooltipProvider>
