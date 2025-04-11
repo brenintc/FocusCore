@@ -40,26 +40,28 @@ const FinancialPagination: React.FC<FinancialPaginationProps> = ({
   
   if (isMobile) {
     return (
-      <div className="flex justify-between items-center w-full mb-6">
+      <div className="flex justify-between items-center w-full mb-6 px-1">
         <Button 
           variant="outline" 
-          size="icon" 
+          size="sm" 
           onClick={goToPrevious} 
           disabled={currentIndex === 0}
+          className="h-9 w-9 p-0"
         >
           <ArrowLeft className="h-4 w-4" />
           <span className="sr-only">Anterior</span>
         </Button>
         
-        <span className="text-sm font-medium">
+        <span className="text-sm font-medium truncate mx-2">
           {tabs[currentIndex].label}
         </span>
         
         <Button 
           variant="outline" 
-          size="icon" 
+          size="sm" 
           onClick={goToNext} 
           disabled={currentIndex === tabs.length - 1}
+          className="h-9 w-9 p-0"
         >
           <ArrowRight className="h-4 w-4" />
           <span className="sr-only">Próximo</span>
