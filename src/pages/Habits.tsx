@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -146,10 +145,11 @@ const Habits: React.FC = () => {
     return (completedDays / totalDays) * 100;
   };
   
-  // Get short day name for display
+  // Get short day name for display - fixing to properly show current day numbers
   const getShortDayName = (dateStr: string) => {
     const date = new Date(dateStr);
-    return format(date, 'd');
+    // Return just the day number (1-31)
+    return date.getDate().toString();
   };
   
   return (
