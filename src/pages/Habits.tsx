@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -14,6 +14,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { Progress } from "@/components/ui/progress";
+import { format } from 'date-fns';
 
 interface Habit {
   id: string;
@@ -27,6 +28,9 @@ interface Habit {
 }
 
 const Habits: React.FC = () => {
+  // Get current date in YYYY-MM-DD format
+  const today = useMemo(() => format(new Date(), 'yyyy-MM-dd'), []);
+  
   const [habits, setHabits] = useState<Habit[]>([
     { 
       id: '1', 
@@ -34,10 +38,7 @@ const Habits: React.FC = () => {
       frequency: 'daily', 
       streak: 5, 
       completion: {
-        '2025-04-01': true,
-        '2025-04-02': true,
-        '2025-04-03': true,
-        '2025-04-04': false,
+        [today]: false, // Initialize today with false
       },
       category: 'Saúde' 
     },
@@ -47,10 +48,7 @@ const Habits: React.FC = () => {
       frequency: 'daily', 
       streak: 3, 
       completion: {
-        '2025-04-01': true,
-        '2025-04-02': true,
-        '2025-04-03': true,
-        '2025-04-04': false,
+        [today]: false, // Initialize today with false
       },
       category: 'Fitness' 
     },
@@ -60,10 +58,7 @@ const Habits: React.FC = () => {
       frequency: 'daily', 
       streak: 0, 
       completion: {
-        '2025-04-01': true,
-        '2025-04-02': false,
-        '2025-04-03': false,
-        '2025-04-04': false,
+        [today]: false, // Initialize today with false
       },
       category: 'Desenvolvimento pessoal' 
     },
@@ -73,10 +68,7 @@ const Habits: React.FC = () => {
       frequency: 'daily', 
       streak: 7, 
       completion: {
-        '2025-04-01': true,
-        '2025-04-02': true,
-        '2025-04-03': true,
-        '2025-04-04': true,
+        [today]: false, // Initialize today with false
       },
       category: 'Aprendizado' 
     },
@@ -84,6 +76,15 @@ const Habits: React.FC = () => {
   
   const [newHabitName, setNewHabitName] = useState('');
   const [newHabitCategory, setNewHabitCategory] = useState('');
+  
+  // Calculate the last week dates dynamically based on today
+  const lastWeekDates = useMemo(() => {
+    return Array.from({ length: 7 }, (_, i) => {
+      const date = new Date();
+      date.setDate(date.getDate() - (6 - i));
+      return format(date, 'yyyy-MM-dd');
+    });
+  }, []);
   
   const addHabit = () => {
     if (newHabitName.trim() === '') return;
@@ -93,7 +94,9 @@ const Habits: React.FC = () => {
       name: newHabitName,
       frequency: 'daily',
       streak: 0,
-      completion: {},
+      completion: {
+        [today]: false // Initialize today with false
+      },
       category: newHabitCategory || 'Geral'
     };
     
@@ -107,8 +110,6 @@ const Habits: React.FC = () => {
   };
   
   const toggleCompletion = (habitId: string) => {
-    const today = '2025-04-04'; // Using a fixed date for demonstration
-    
     setHabits(habits.map(habit => {
       if (habit.id === habitId) {
         const wasCompleted = habit.completion[today] || false;
@@ -139,16 +140,16 @@ const Habits: React.FC = () => {
     }));
   };
   
-  const lastWeekDates = Array.from({ length: 7 }, (_, i) => {
-    const date = new Date('2025-04-04');
-    date.setDate(date.getDate() - (6 - i));
-    return date.toISOString().split('T')[0];
-  });
-  
   const calculateProgress = (habit: Habit) => {
     const totalDays = lastWeekDates.length;
     const completedDays = lastWeekDates.filter(date => habit.completion[date]).length;
     return (completedDays / totalDays) * 100;
+  };
+  
+  // Get short day name for display
+  const getShortDayName = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return format(date, 'd');
   };
   
   return (
@@ -253,9 +254,9 @@ const Habits: React.FC = () => {
                 {/* Weekly Calendar */}
                 <div className="mt-4 flex justify-between">
                   {lastWeekDates.map(date => {
-                    const day = new Date(date).getDate();
+                    const day = getShortDayName(date);
                     const isCompleted = habit.completion[date];
-                    const isToday = date === '2025-04-04';
+                    const isToday = date === today;
                     
                     return (
                       <div 
